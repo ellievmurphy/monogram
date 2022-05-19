@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav a {
+  color: black;
+  font-weight: bold;
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.canvas-and-friends-container {
+  display: flex;
+}
+
+.vertical-toolbar-container {
+  padding: 15px;
+  text-align: left;
+  flex-basis: 25%;
+}
+
+.canvas-container {
+  flex-basis: 60%;
+}
+
+.action-toolbar-container {
+  flex-basis: 15%;
+}
