@@ -1,0 +1,26 @@
+class AddTextMenu extends Component {
+  state = {
+    userInput: "",
+  };
+
+  inputChangedHandler = (event) => {
+    this.setState({ userInput: event.target.value });
+  };
+
+  render() {
+    return (
+      <div className="add-text-menu-container">
+        <form>
+          <input
+            type="text"
+            value={this.state.userInput}
+            onChange={this.inputChangedHandler}
+          />
+          <input type="submit" />
+        </form>
+        <p>{this.state.userInput}</p>
+      </div>
+    );
+  }
+}
+export default AddTextMenu;

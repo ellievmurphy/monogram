@@ -1,0 +1,25 @@
+{
+  /*export default function AddTextMenu() {
+  let [newText, setNewText] = useState(<div>hello</div>);
+
+  function handleChange(response) {
+    setNewText(response);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
+  function addText() {
+    return { newText };
+  }
+  return (
+    <div className="add-text-container">
+      <form onSubmit={handleSubmit}>
+        <label>Enter Text</label> <br />
+        <input type="text" onChange={handleChange} />
+        <input type="submit" />
+      </form>
+      <NewTextElement message={addText} />
+    </div>
+  );
+}*/
+}

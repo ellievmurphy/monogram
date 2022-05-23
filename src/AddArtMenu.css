@@ -1,0 +1,35 @@
+.popular-cat {
+  background-color: rgba(255, 0, 0, 0.475);
+  border-color: red;
+}
+.emojis-cat {
+  background-color: rgba(255, 132, 0, 0.475);
+  border-color: orange;
+}
+.symbols-cat {
+  background-color: rgba(255, 221, 0, 0.475);
+  border-color: yellow;
+}
+.animals-cat {
+  background-color: rgba(111, 255, 0, 0.475);
+  border-color: green;
+}
+.nature-cat {
+  background-color: rgba(18, 241, 241, 0.475);
+  border-color: cadetblue;
+}
+.food-cat {
+  background-color: rgba(0, 110, 255, 0.475);
+  border-color: blue;
+}
+
+button.category-button {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto auto;
+}

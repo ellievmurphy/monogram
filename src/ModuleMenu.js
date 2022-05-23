@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
+import CanvasElement from "./CanvasElement";
+import ColorChangeMenu from "./ColorChangeMenu";
 import "./ModuleMenu.css";
+import UploadMenu from "./UploadMenu";
 
 export default function ModuleMenu() {
   let [verticalBar, setVerticalBar] = useState(<div>Left</div>);
 
   function handleAddText(event) {
     event.preventDefault();
-    setVerticalBar(<AddTextMenu />);
+    setVerticalBar(<AddTextMenu keyword="New Text" />);
   }
 
   function handleAddArt(event) {
@@ -18,12 +21,12 @@ export default function ModuleMenu() {
 
   function handleUpload(event) {
     event.preventDefault();
-    setVerticalBar(<div>Upload</div>);
+    setVerticalBar(<UploadMenu />);
   }
 
   function handleChangeColor(event) {
     event.preventDefault();
-    setVerticalBar(<div>Change Color</div>);
+    setVerticalBar(<ColorChangeMenu />);
   }
 
   return (
@@ -56,8 +59,9 @@ export default function ModuleMenu() {
         <div className="vertical-toolbar-container flex-item">
           {verticalBar}
         </div>
-        <div className="canvas-container flex-item">Canvas</div>
-        <div className="action-toolbar-container flex-item">Right</div>
+        <div className="canvas-container flex-item">
+          <CanvasElement />
+        </div>
       </div>
     </div>
   );
