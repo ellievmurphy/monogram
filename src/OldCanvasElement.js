@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { FabricJSCanvas } from "fabricjs-react";
 import { useFabricJSEditor } from "fabricjs-react";
-import { fabric } from "fabric";
-
-import image from "./debitcard.png";
 import "./CanvasElement.css";
 
 export default function CanvasElement(props) {
@@ -16,7 +13,7 @@ export default function CanvasElement(props) {
     }
   }, [editor, bucket.background.hex]);
   const onAddCircle = () => {
-    editor?.addCircle();
+    editor.addCircle();
   };
   const onAddText = () => {
     editor.addText("New Text");
@@ -32,11 +29,6 @@ export default function CanvasElement(props) {
         onClick={(event) => {
           event.preventDefault();
           console.log(bucket.art);
-          fabric.Image.fromURL(image, function (oImg) {
-            oImg.scaleToHeight(200);
-            oImg.scaleToWidth(200);
-            editor?.canvas.add(oImg);
-          });
         }}
       >
         Add Image

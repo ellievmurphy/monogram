@@ -8,37 +8,51 @@ import {
   FaHeart,
   FaBrain,
 } from "react-icons/fa";
+import { rect, canvas } from "./contents/fabric";
 
 import "./AddArtMenu.css";
-
 export default function AddArtMenu() {
-  let [loaded, setLoaded] = useState(false);
   function goBack(event) {
     event.preventDefault();
     setArtDisplay(
       <div>
         <form className="category-button-container">
-          <button onClick={handleClick} className="category-button popular-cat">
+          <button
+            onClick={handleClickPop}
+            className="category-button popular-cat"
+          >
             <FaHeart />
             <h4>{`Most Popular`}</h4>
           </button>
-          <button onClick={handleClick} className="category-button emojis-cat">
+          <button
+            onClick={handleClickEmoji}
+            className="category-button emojis-cat"
+          >
             <FaAngellist />
             <h4>Emojis</h4>
           </button>
-          <button onClick={handleClick} className="category-button symbols-cat">
+          <button
+            onClick={handleClickSym}
+            className="category-button symbols-cat"
+          >
             <FaAt />
             <h4>{`Symbols & Shapes`}</h4>
           </button>
-          <button onClick={handleClick} className="category-button animals-cat">
+          <button
+            onClick={handleClickAni}
+            className="category-button animals-cat"
+          >
             <FaDog />
             <h4>Animals</h4>
           </button>
-          <button onClick={handleClick} className="category-button nature-cat">
+          <button
+            onClick={handleClickNat}
+            className="category-button nature-cat"
+          >
             <FaLeaf />
             <h4>Nature</h4>
           </button>
-          <button onClick={handleClick} className="category-button food-cat">
+          <button onClick={handleClickFD} className="category-button food-cat">
             <FaCoffee />
             <h4>{`Food & Drink`}</h4>
           </button>
@@ -47,54 +61,144 @@ export default function AddArtMenu() {
     );
   }
 
-  function handleClick(event) {
+  function handleClickPop(event) {
     event.preventDefault();
     setArtDisplay(
       <div>
         <h3>
-          yay! it worked. your brain is so wrinkly <FaBrain />
+          Popular <FaBrain />
         </h3>
         <button className="back-button" onClick={goBack}>
           back
         </button>
       </div>
     );
-    load();
   }
+
+  function handleClickEmoji(event) {
+    event.preventDefault();
+    setArtDisplay(
+      <div>
+        <h3>
+          Emoji <FaBrain />
+        </h3>
+        <button className="back-button" onClick={goBack}>
+          back
+        </button>
+      </div>
+    );
+  }
+
+  function handleClickSym(event) {
+    event.preventDefault();
+    setArtDisplay(
+      <div>
+        <h3>
+          Shapes and Symbols <FaBrain />
+        </h3>
+        <ul>
+          <li>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                canvas.add(rect);
+              }}
+            >
+              Circle
+            </button>
+          </li>
+        </ul>
+        <button className="back-button" onClick={goBack}>
+          back
+        </button>
+      </div>
+    );
+  }
+
+  function handleClickNat(event) {
+    event.preventDefault();
+    setArtDisplay(
+      <div>
+        <h3>
+          Nature <FaBrain />
+        </h3>
+        <button className="back-button" onClick={goBack}>
+          back
+        </button>
+      </div>
+    );
+  }
+
+  function handleClickAni(event) {
+    event.preventDefault();
+    setArtDisplay(
+      <div>
+        <h3>
+          Animals <FaBrain />
+        </h3>
+        <button className="back-button" onClick={goBack}>
+          back
+        </button>
+      </div>
+    );
+  }
+
+  function handleClickFD(event) {
+    event.preventDefault();
+    setArtDisplay(
+      <div>
+        <h3>
+          Food and Drink <FaBrain />
+        </h3>
+        <button className="back-button" onClick={goBack}>
+          back
+        </button>
+      </div>
+    );
+  }
+
   let [artDisplay, setArtDisplay] = useState(
     <div>
       <form className="category-button-container">
-        <button onClick={handleClick} className="category-button popular-cat">
+        <button
+          onClick={handleClickPop}
+          className="category-button popular-cat"
+        >
           <FaHeart />
           <h4>{`Most Popular`}</h4>
         </button>
-        <button onClick={handleClick} className="category-button emojis-cat">
+        <button
+          onClick={handleClickEmoji}
+          className="category-button emojis-cat"
+        >
           <FaAngellist />
           <h4>Emojis</h4>
         </button>
-        <button onClick={handleClick} className="category-button symbols-cat">
+        <button
+          onClick={handleClickSym}
+          className="category-button symbols-cat"
+        >
           <FaAt />
           <h4>{`Symbols & Shapes`}</h4>
         </button>
-        <button onClick={handleClick} className="category-button animals-cat">
+        <button
+          onClick={handleClickAni}
+          className="category-button animals-cat"
+        >
           <FaDog />
           <h4>Animals</h4>
         </button>
-        <button onClick={handleClick} className="category-button nature-cat">
+        <button onClick={handleClickNat} className="category-button nature-cat">
           <FaLeaf />
           <h4>Nature</h4>
         </button>
-        <button onClick={handleClick} className="category-button food-cat">
+        <button onClick={handleClickFD} className="category-button food-cat">
           <FaCoffee />
           <h4>{`Food & Drink`}</h4>
         </button>
       </form>
     </div>
   );
-
-  function load() {
-    setLoaded(true);
-  }
 
   return <div className="nav-image-category-container">{artDisplay}</div>;
 }
