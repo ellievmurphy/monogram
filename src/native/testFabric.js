@@ -10,7 +10,7 @@ canvas.setBackgroundColor("blue");
 var rect = new fabric.Rect({
   left: 100,
   top: 100,
-  fill: "red",
+  fill: "blue",
   width: 20,
   height: 20,
   angle: 45,

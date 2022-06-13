@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
-import CanvasElement from "./CanvasElement";
 import { CirclePicker } from "react-color";
-import { bucket, changeBackground } from "./contents/bucket";
+import { changeBackground } from "./contents/bucket";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";
@@ -73,9 +72,6 @@ export default function ModuleMenu() {
       <div className="canvas-and-friends-container">
         <div className="vertical-toolbar-container flex-item">
           {verticalBar}
-        </div>
-        <div className="canvas-container flex-item">
-          <CanvasElement data={bucket} />
         </div>
       </div>
     </div>
