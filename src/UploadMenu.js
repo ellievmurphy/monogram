@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addImage } from "./contents/bucket";
+import { addUpload } from "./contents/bucket";
 
 export default function UploadMenu() {
   let [image, setImage] = useState(null);
@@ -7,7 +7,8 @@ export default function UploadMenu() {
   function handleSubmit(event) {
     event.preventDefault();
     alert(`Selected file - ${image}`);
-    addImage(image);
+
+    addUpload(image);
   }
 
   function handleChange(event) {
@@ -17,8 +18,13 @@ export default function UploadMenu() {
   return (
     <div className="upload-menu-container">
       Upload File
-      <form onSubmit={handleSubmit}>
-        <input type="file" name="filename" onChange={handleChange} />
+      <form id="uploadImg" onSubmit={handleSubmit}>
+        <input
+          type="file"
+          name="filename"
+          onChange={handleChange}
+          id="uploadedImg"
+        />
         <button type="submit">Submit</button>
       </form>
     </div>

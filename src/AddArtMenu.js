@@ -8,7 +8,7 @@ import {
   FaHeart,
   FaBrain,
 } from "react-icons/fa";
-import { rect, canvas } from "./contents/fabric";
+import { createCircle, canvas, createRect } from "./contents/fabric";
 
 import "./AddArtMenu.css";
 export default function AddArtMenu() {
@@ -101,10 +101,24 @@ export default function AddArtMenu() {
             <button
               onClick={(event) => {
                 event.preventDefault();
-                canvas.add(rect);
+                const circle = createCircle();
+                canvas.add(circle);
+                canvas.renderAll();
               }}
             >
               Circle
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                const rect = createRect();
+                canvas.add(rect);
+                canvas.renderAll();
+              }}
+            >
+              Rectangle
             </button>
           </li>
         </ul>
