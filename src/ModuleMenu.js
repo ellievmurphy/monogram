@@ -3,6 +3,7 @@ import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
 import { CirclePicker } from "react-color";
 import { changeBackground } from "./contents/bucket";
+import { deleteSelected } from "./contents/fabric";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";
@@ -73,6 +74,16 @@ export default function ModuleMenu() {
         <div className="vertical-toolbar-container flex-item">
           {verticalBar}
         </div>
+      </div>
+      <div className="delete-button-container">
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            deleteSelected();
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

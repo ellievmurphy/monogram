@@ -8,9 +8,8 @@ const product = new fabric.Rect({
   fill: "white",
   width: 300,
   height: 425,
-  hasControls: false,
-  lockMovementX: true,
-  lockMovementY: true,
+  selectable: false,
+  hoverCursor: "cursor",
 });
 canvas.setBackgroundColor(bucket.background);
 canvas.setHeight(500);
@@ -45,11 +44,24 @@ function createText(text) {
   bucket.text.push(input);
   return input;
 }
-//update background color
+// update background color
 function updateBackground(color) {
   canvas.getActiveObject().set("fill", color.hex);
   bucket.background = color.hex;
   canvas.renderAll();
 }
-
-export { createCircle, canvas, createRect, createText, updateBackground };
+// delete selected object
+function deleteSelected() {
+  canvas.getActiveObjects().forEach((obj) => {
+    canvas.remove(obj);
+  });
+  canvas.discardActiveObject().renderAll();
+}
+export {
+  createCircle,
+  canvas,
+  createRect,
+  createText,
+  updateBackground,
+  deleteSelected,
+};
