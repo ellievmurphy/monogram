@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { canvas, createText } from "./contents/fabric";
+import { bucket } from "./contents/bucket";
 import EditTextMenu from "./EditTextMenu";
 
 export default function AddTextMenu(props) {
@@ -16,6 +17,7 @@ export default function AddTextMenu(props) {
           const text = createText(input);
           canvas.add(text);
           canvas.renderAll();
+          console.log(bucket.text);
         }}
       >
         <input type="text" placeholder="Add text..." onChange={handleChange} />

@@ -30,10 +30,4 @@ function addUpload(image) {
     });
 }
 
-function addImage(image) {
-  bucket.uploads.push(image);
-  console.log(bucket.art);
-  canvas.renderAll();
-}
-
-export { bucket, changeBackground, addImage, addUpload };
+export { bucket, changeBackground, addUpload };
