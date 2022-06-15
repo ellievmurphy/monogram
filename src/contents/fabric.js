@@ -24,6 +24,8 @@ function createCircle() {
     top: 100,
   });
   bucket.art.push(circle);
+  // stores key of element as "object_type"-"color"
+  bucket.art[bucket.art.length - 1].id = `circle-${circle.fill}`;
   return circle;
 }
 // create a rectangle object
@@ -36,12 +38,16 @@ function createRect() {
     height: 20,
   });
   bucket.art.push(rect);
+  // stores key of element as "object_type"-"color"
+  bucket.art[bucket.art.length - 1].id = `rect-${rect.fill}`;
   return rect;
 }
 // create a text object
 function createText(text) {
   const input = new fabric.Text(text, { fontFamily: "Comic Sans" });
   bucket.text.push(input);
+  // stores key of elements in array as "text"
+  bucket.text[bucket.text.length - 1].id = text;
   return input;
 }
 // update background color
