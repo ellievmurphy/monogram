@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { CompactPicker } from "react-color";
-import "./EditTextMenu.css";
+import { canvas } from "./contents/fabric";
+import "./EditMenu.css";
 
-export default function EditTextMenu() {
+export default function EditTextMenu(props) {
   let [showMenu, setShowMenu] = useState(false);
 
-  function handleDrop(event) {
+  function handleFontDrop(event) {
     event.preventDefault();
 
     if (showMenu) {
@@ -19,10 +20,10 @@ export default function EditTextMenu() {
     <div className="edit-text-menu-container">
       <form className="edit-text-input-form">
         <ul>
-          <li>
+          <li className="font-dropdown-menu-container">
             Font:
-            <div class="dropdown">
-              <button onClick={handleDrop}>Fonts</button>
+            <div className="dropdown">
+              <button onClick={handleFontDrop}>Fonts</button>
               {showMenu ? (
                 <div id="myDropdown" className="dropdown-content">
                   <a href="_blank">Font 1</a>
@@ -34,7 +35,12 @@ export default function EditTextMenu() {
           </li>
           <li>
             Text color:
-            <CompactPicker />
+            <CompactPicker
+              onChange={(color) => {
+                props.currObj.set("fill", color.hex);
+                canvas.renderAll();
+              }}
+            />
           </li>
           <li>Monogram Scale:</li>
           <li>Rotation:</li>

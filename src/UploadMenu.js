@@ -7,11 +7,11 @@ export default function UploadMenu() {
   function handleSubmit(event) {
     event.preventDefault();
     alert(`Selected file - ${image}`);
-
     addUpload(image);
   }
 
   function handleChange(event) {
+    console.log(event);
     setImage(event.target.files[0].name);
   }
 

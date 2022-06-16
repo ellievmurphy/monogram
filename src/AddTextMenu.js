@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { canvas, createText } from "./contents/fabric";
+import { canvas, createText, markToggle } from "./contents/fabric";
 import { bucket } from "./contents/bucket";
-import EditTextMenu from "./EditTextMenu";
 
 export default function AddTextMenu(props) {
   let [input, setInput] = useState("New text");
+  let [toggleEdit, setToggleEdit] = useState(null);
   function handleChange(event) {
     setInput(event.target.value);
   }
@@ -16,6 +16,7 @@ export default function AddTextMenu(props) {
           event.preventDefault();
           const text = createText(input);
           canvas.add(text);
+          markToggle(setToggleEdit, text);
           canvas.renderAll();
           console.log(bucket.text);
         }}
@@ -23,6 +24,7 @@ export default function AddTextMenu(props) {
         <input type="text" placeholder="Add text..." onChange={handleChange} />
         <input type="submit" />
       </form>
+      {toggleEdit}
     </div>
   );
 }

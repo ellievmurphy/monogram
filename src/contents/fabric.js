@@ -1,5 +1,6 @@
 import { fabric } from "fabric";
 import { bucket } from "./bucket";
+import EditMenu from "../EditMenu";
 // create a wrapper around native canvas element (with id="c")
 var canvas = new fabric.Canvas("c");
 const product = new fabric.Rect({
@@ -10,6 +11,7 @@ const product = new fabric.Rect({
   height: 425,
   selectable: false,
   hoverCursor: "cursor",
+  id: "product",
 });
 canvas.setBackgroundColor(bucket.background);
 canvas.setHeight(500);
@@ -52,9 +54,9 @@ function createText(text) {
 }
 // update background color
 function updateBackground(color) {
+  canvas.setActiveObject(product);
   canvas.getActiveObject().set("fill", color.hex);
-  bucket.background = color.hex;
-  canvas.renderAll();
+  canvas.discardActiveObject().renderAll();
 }
 // delete selected object
 function deleteSelected() {
@@ -63,6 +65,11 @@ function deleteSelected() {
   });
   canvas.discardActiveObject().renderAll();
 }
+
+function markToggle(stateFunction, object) {
+  stateFunction(<EditMenu currObj={object} />);
+  canvas.setActiveObject(object);
+}
 export {
   createCircle,
   canvas,
@@ -70,4 +77,5 @@ export {
   createText,
   updateBackground,
   deleteSelected,
+  markToggle,
 };

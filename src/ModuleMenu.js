@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
-import { CirclePicker } from "react-color";
-import { changeBackground } from "./contents/bucket";
-import { deleteSelected } from "./contents/fabric";
+import { CompactPicker } from "react-color";
+import { deleteSelected, updateBackground } from "./contents/fabric";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";
@@ -28,7 +27,11 @@ export default function ModuleMenu() {
     event.preventDefault();
     setVerticalBar(
       <div className="color-change-menu-container">
-        <CirclePicker onChangeComplete={changeBackground} />
+        <CompactPicker
+          onChangeComplete={(color) => {
+            updateBackground(color);
+          }}
+        />
         **add text when hovering over color to indicate what color is being
         chosen
       </div>
@@ -40,6 +43,7 @@ export default function ModuleMenu() {
   }
 
   return (
+    //TODO: how to upload images with fabric??
     <div className="top-menu-container">
       <nav>
         <ul>
@@ -60,7 +64,7 @@ export default function ModuleMenu() {
           </li>
           <li className="change-color-button-container">
             <a href="_blank" onClick={handleChangeColor}>
-              Change Color
+              Product Color
             </a>
           </li>
           <li className="view-layers-button-container">

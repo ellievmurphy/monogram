@@ -5,6 +5,7 @@ const bucket = {
   art: [],
   text: [],
   uploads: [],
+  layers: [],
 };
 
 function changeBackground(color) {
@@ -12,7 +13,7 @@ function changeBackground(color) {
 }
 
 function addUpload(image) {
-  document
+  /*document
     .getElementById("uploadedImg")
     .addEventListener("change", function (event) {
       var img = image;
@@ -27,7 +28,7 @@ function addUpload(image) {
         });
       };
       reader.readAsDataURL(img);
-    });
+    });*/
 }
 
 export { bucket, changeBackground, addUpload };
