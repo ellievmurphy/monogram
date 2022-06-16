@@ -46,7 +46,11 @@ function createRect() {
 }
 // create a text object
 function createText(text) {
-  const input = new fabric.Text(text, { fontFamily: "Comic Sans" });
+  const input = new fabric.Text(text, {
+    fontFamily: "Comic Sans",
+    left: 150,
+    top: 150,
+  });
   bucket.text.push(input);
   // stores key of elements in array as "text"
   bucket.text[bucket.text.length - 1].id = text;
@@ -67,12 +71,12 @@ function deleteSelected() {
 }
 
 function markToggle(stateFunction, object) {
-  stateFunction(<EditMenu currObj={object} />);
+  stateFunction(<EditMenu />);
   canvas.setActiveObject(object);
 }
 export {
-  createCircle,
   canvas,
+  createCircle,
   createRect,
   createText,
   updateBackground,

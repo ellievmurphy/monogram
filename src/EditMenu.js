@@ -3,7 +3,7 @@ import { CompactPicker } from "react-color";
 import { canvas } from "./contents/fabric";
 import "./EditMenu.css";
 
-export default function EditTextMenu(props) {
+export default function EditTextMenu() {
   let [showMenu, setShowMenu] = useState(false);
 
   function handleFontDrop(event) {
@@ -37,7 +37,7 @@ export default function EditTextMenu(props) {
             Text color:
             <CompactPicker
               onChange={(color) => {
-                props.currObj.set("fill", color.hex);
+                canvas.getActiveObject().set("fill", color.hex);
                 canvas.renderAll();
               }}
             />
