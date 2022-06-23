@@ -6,6 +6,7 @@ const bucket = {
   text: [],
   uploads: [],
   layers: [],
+  currMenu: "default",
 };
 
 function changeBackground(color) {

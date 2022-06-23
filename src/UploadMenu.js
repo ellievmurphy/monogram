@@ -6,13 +6,13 @@ export default function UploadMenu() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    alert(`Selected file - ${image}`);
+    alert(`Selected file - ${image.name}`);
     addUpload(image);
   }
 
   function handleChange(event) {
-    console.log(event);
-    setImage(event.target.files[0].name);
+    console.log(event.target);
+    setImage(event.target.files[0]);
   }
 
   return (
@@ -22,9 +22,10 @@ export default function UploadMenu() {
         <input
           type="file"
           name="filename"
-          onChange={handleChange}
           id="uploadedImg"
+          onInput={handleChange}
         />
+        <br />
         <button type="submit">Submit</button>
       </form>
     </div>

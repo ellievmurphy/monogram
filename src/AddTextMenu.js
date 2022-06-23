@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { canvas, createText, markToggle } from "./contents/fabric";
+import { canvas, createText } from "./contents/fabric";
 import { bucket } from "./contents/bucket";
 
 export default function AddTextMenu(props) {
@@ -14,9 +14,9 @@ export default function AddTextMenu(props) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          const text = createText(input);
-          canvas.add(text);
-          markToggle(setToggleEdit, text);
+          const text = createText(input); //create text fabric object
+          canvas.add(text); //add to canvas
+          canvas.setActiveObject(text); //set as current active object
           canvas.renderAll();
           console.log(bucket.text);
         }}

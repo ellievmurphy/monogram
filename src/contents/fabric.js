@@ -1,6 +1,5 @@
 import { fabric } from "fabric";
 import { bucket } from "./bucket";
-import EditMenu from "../EditMenu";
 // create a wrapper around native canvas element (with id="c")
 var canvas = new fabric.Canvas("c");
 const product = new fabric.Rect({
@@ -18,7 +17,7 @@ canvas.setHeight(500);
 canvas.setWidth(500);
 canvas.add(product);
 // create a circle object
-function createCircle() {
+const createCircle = () => {
   const circle = new fabric.Circle({
     radius: 20,
     fill: "red",
@@ -28,10 +27,11 @@ function createCircle() {
   bucket.art.push(circle);
   // stores key of element as "object_type"-"color"
   bucket.art[bucket.art.length - 1].id = `circle-${circle.fill}`;
+  bucket.layers.push(bucket.art[bucket.art.length - 1]);
   return circle;
-}
+};
 // create a rectangle object
-function createRect() {
+const createRect = () => {
   const rect = new fabric.Rect({
     left: 100,
     top: 100,
@@ -42,10 +42,11 @@ function createRect() {
   bucket.art.push(rect);
   // stores key of element as "object_type"-"color"
   bucket.art[bucket.art.length - 1].id = `rect-${rect.fill}`;
+  bucket.layers.push(bucket.art[bucket.art.length - 1]);
   return rect;
-}
+};
 // create a text object
-function createText(text) {
+const createText = (text) => {
   const input = new fabric.Text(text, {
     fontFamily: "Comic Sans",
     left: 150,
@@ -54,8 +55,9 @@ function createText(text) {
   bucket.text.push(input);
   // stores key of elements in array as "text"
   bucket.text[bucket.text.length - 1].id = text;
+  bucket.layers.push(bucket.text[bucket.text.length - 1]);
   return input;
-}
+};
 // update background color
 function updateBackground(color) {
   canvas.setActiveObject(product);
@@ -66,14 +68,12 @@ function updateBackground(color) {
 function deleteSelected() {
   canvas.getActiveObjects().forEach((obj) => {
     canvas.remove(obj);
+    //update layers
+    //showLayers()
   });
   canvas.discardActiveObject().renderAll();
 }
 
-function markToggle(stateFunction, object) {
-  stateFunction(<EditMenu />);
-  canvas.setActiveObject(object);
-}
 export {
   canvas,
   createCircle,
@@ -81,5 +81,4 @@ export {
   createText,
   updateBackground,
   deleteSelected,
-  markToggle,
 };

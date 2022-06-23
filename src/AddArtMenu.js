@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import EditArtMenu from "./EditArtMenu";
 import {
   FaAngellist,
   FaAt,
@@ -61,6 +62,11 @@ export default function AddArtMenu() {
     );
   }
 
+  function openEdit(event) {
+    event.preventDefault();
+    setArtDisplay(<EditArtMenu backFunction={goBack} />);
+  }
+
   function handleClickPop(event) {
     event.preventDefault();
     setArtDisplay(
@@ -103,6 +109,8 @@ export default function AddArtMenu() {
                 event.preventDefault();
                 const circle = createCircle();
                 canvas.add(circle);
+                canvas.setActiveObject(circle);
+                openEdit(event);
                 canvas.renderAll();
               }}
             >
@@ -115,6 +123,8 @@ export default function AddArtMenu() {
                 event.preventDefault();
                 const rect = createRect();
                 canvas.add(rect);
+                canvas.setActiveObject(rect);
+                openEdit(event);
                 canvas.renderAll();
               }}
             >

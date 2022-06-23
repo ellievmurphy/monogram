@@ -7,9 +7,12 @@ import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";
 import "./ModuleMenu.css";
-
 export default function ModuleMenu() {
-  let [verticalBar, setVerticalBar] = useState(<div>Left</div>);
+  let [verticalBar, setVerticalBar] = useState(
+    <div>
+      <h4>Welcome!</h4> Select one of the options above
+    </div>
+  );
 
   function handleAddText(event) {
     event.preventDefault();
