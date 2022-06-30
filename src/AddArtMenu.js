@@ -62,9 +62,10 @@ export default function AddArtMenu() {
     );
   }
 
-  function openEdit(event) {
+  function openEdit(event, obj) {
     event.preventDefault();
-    setArtDisplay(<EditArtMenu backFunction={goBack} />);
+    console.log(obj);
+    setArtDisplay(<EditArtMenu backFunction={goBack} currObj={obj} />);
   }
 
   function handleClickPop(event) {
@@ -99,9 +100,7 @@ export default function AddArtMenu() {
     event.preventDefault();
     setArtDisplay(
       <div>
-        <h3>
-          Shapes and Symbols <FaBrain />
-        </h3>
+        <h4>Shapes and Symbols</h4>
         <ul>
           <li>
             <button
@@ -110,7 +109,7 @@ export default function AddArtMenu() {
                 const circle = createCircle();
                 canvas.add(circle);
                 canvas.setActiveObject(circle);
-                openEdit(event);
+                openEdit(event, circle);
                 canvas.renderAll();
               }}
             >
@@ -124,7 +123,7 @@ export default function AddArtMenu() {
                 const rect = createRect();
                 canvas.add(rect);
                 canvas.setActiveObject(rect);
-                openEdit(event);
+                openEdit(event, rect);
                 canvas.renderAll();
               }}
             >

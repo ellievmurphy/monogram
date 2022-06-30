@@ -1,14 +1,17 @@
 import React from "react";
 import { bucket } from "./contents/bucket";
+import DraggableList from "react-draggable-list";
 
 export default function LayersView() {
+  // <DraggableList list={bucket.layers} itemKey={bucket.layers.id} />
   return (
-    <div>
-      <ul>
-        {bucket.layers.map(function (item) {
-          return <li key={item.id}>{item.id}</li>;
-        })}
-      </ul>
-    </div>
+    <>
+      {bucket.layers &&
+        bucket.layers.map((item, index) => (
+          <h1 key={index} draggable>
+            {item.id}
+          </h1>
+        ))}
+    </>
   );
 }

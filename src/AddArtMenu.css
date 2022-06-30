@@ -33,3 +33,7 @@ form {
   display: grid;
   grid-template-columns: auto auto;
 }
+
+ul {
+  list-style: none;
+}

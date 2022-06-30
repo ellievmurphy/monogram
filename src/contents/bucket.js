@@ -32,4 +32,17 @@ function addUpload(image) {
     });*/
 }
 
-export { bucket, changeBackground, addUpload };
+/*
+    Recursive function to create a new alpha-numeric id
+*/
+function createId() {
+  let ranId = Math.random().toString(36).slice(2);
+  bucket.layers.map(function (item) {
+    if (item.id === ranId) {
+      ranId = createId();
+    }
+  });
+  return ranId;
+}
+
+export { bucket, changeBackground, addUpload, createId };

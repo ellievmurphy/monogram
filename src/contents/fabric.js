@@ -1,7 +1,8 @@
 import { fabric } from "fabric";
-import { bucket } from "./bucket";
+import { bucket, createId } from "./bucket";
+
 // create a wrapper around native canvas element (with id="c")
-var canvas = new fabric.Canvas("c");
+var canvas = new fabric.Canvas("c", { preserveObjectStacking: true });
 const product = new fabric.Rect({
   left: 105,
   top: 30,
@@ -26,7 +27,8 @@ const createCircle = () => {
   });
   bucket.art.push(circle);
   // stores key of element as "object_type"-"color"
-  bucket.art[bucket.art.length - 1].id = `circle-${circle.fill}`;
+  const objId = createId();
+  bucket.art[bucket.art.length - 1].id = objId;
   bucket.layers.push(bucket.art[bucket.art.length - 1]);
   return circle;
 };
@@ -39,9 +41,11 @@ const createRect = () => {
     width: 20,
     height: 20,
   });
+  console.log(rect);
   bucket.art.push(rect);
   // stores key of element as "object_type"-"color"
-  bucket.art[bucket.art.length - 1].id = `rect-${rect.fill}`;
+  const objId = createId();
+  bucket.art[bucket.art.length - 1].id = objId;
   bucket.layers.push(bucket.art[bucket.art.length - 1]);
   return rect;
 };
@@ -54,7 +58,9 @@ const createText = (text) => {
   });
   bucket.text.push(input);
   // stores key of elements in array as "text"
-  bucket.text[bucket.text.length - 1].id = text;
+  const objId = createId();
+  console.log(objId);
+  bucket.text[bucket.text.length - 1].id = objId;
   bucket.layers.push(bucket.text[bucket.text.length - 1]);
   return input;
 };
@@ -74,6 +80,20 @@ function deleteSelected() {
   canvas.discardActiveObject().renderAll();
 }
 
+function changeLayer(direction) {
+  console.log(direction);
+  if (direction === "sendBack") {
+    canvas.sendBackwards(canvas.getActiveObject());
+  } else if (direction === "bringUp") {
+    canvas.bringForward(canvas.getActiveObject());
+  } else if (direction === "top") {
+    canvas.bringToFront(canvas.getActiveObject());
+  } else if (direction === "bottom") {
+    canvas.sendToBack(canvas.getActiveObject());
+  }
+  canvas.renderAll();
+}
+
 export {
   canvas,
   createCircle,
@@ -81,4 +101,5 @@ export {
   createText,
   updateBackground,
   deleteSelected,
+  changeLayer,
 };

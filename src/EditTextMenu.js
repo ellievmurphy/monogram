@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CompactPicker } from "react-color";
 import { canvas } from "./contents/fabric";
 
-export default function EditTextMenu() {
+export default function EditTextMenu(props) {
   let [showMenu, setShowMenu] = useState(false);
   function handleFontDrop(event) {
     event.preventDefault();
@@ -46,6 +46,9 @@ export default function EditTextMenu() {
           <li>Text Size:</li>
         </ul>
       </form>
+      <button className="back-button" onClick={props.backFunction}>
+        Back
+      </button>
     </div>
   );
 }
