@@ -1,5 +1,3 @@
-import { canvas } from "./fabric";
-
 const bucket = {
   background: "grey",
   art: [],
@@ -13,8 +11,8 @@ function changeBackground(color) {
   bucket.background = color;
 }
 
-function addUpload(image) {
-  /*document
+/* function addUpload(image) {
+  document
     .getElementById("uploadedImg")
     .addEventListener("change", function (event) {
       var img = image;
@@ -29,20 +27,21 @@ function addUpload(image) {
         });
       };
       reader.readAsDataURL(img);
-    });*/
-}
+    });
+} */
 
 /*
     Recursive function to create a new alpha-numeric id
 */
 function createId() {
   let ranId = Math.random().toString(36).slice(2);
-  bucket.layers.map(function (item) {
+  ranId = bucket.layers.map(function (item) {
     if (item.id === ranId) {
-      ranId = createId();
+      return createId();
     }
+    return;
   });
   return ranId;
 }
 
-export { bucket, changeBackground, addUpload, createId };
+export { bucket, changeBackground, createId };

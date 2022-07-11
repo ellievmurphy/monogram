@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { bucket } from "./contents/bucket";
-import DraggableList from "react-draggable-list";
+import { Reorder } from "framer-motion";
+import Layer from "./Layer";
+import "./LayersView.css";
 
 export default function LayersView() {
-  // <DraggableList list={bucket.layers} itemKey={bucket.layers.id} />
+  let [list, setList] = useState(bucket.layers);
+
+  function removeItem(idx) {
+    setList(bucket.layers.splice(idx, 1));
+  }
+
   return (
-    <>
-      {bucket.layers &&
-        bucket.layers.map((item, index) => (
-          <h1 key={index} draggable>
-            {item.id}
-          </h1>
-        ))}
-    </>
+    <Reorder.Group
+      id="layer-container"
+      axis="y"
+      className="draggable-layer-list-container"
+      onReorder={setList}
+      values={list}
+    >
+      {list.map((item, i) => {
+        return (
+          <Layer
+            className="layer-item--isDraggable"
+            name={item.name}
+            obj={item}
+            key={i}
+            onRemove={removeItem}
+          />
+        );
+      })}
+    </Reorder.Group>
   );
 }

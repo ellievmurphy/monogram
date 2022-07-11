@@ -64,7 +64,6 @@ export default function AddArtMenu() {
 
   function openEdit(event, obj) {
     event.preventDefault();
-    console.log(obj);
     setArtDisplay(<EditArtMenu backFunction={goBack} currObj={obj} />);
   }
 

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
 import { CompactPicker } from "react-color";
-import { deleteSelected, updateBackground } from "./contents/fabric";
+import { updateBackground } from "./contents/fabric";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";
 import "./ModuleMenu.css";
+
 export default function ModuleMenu() {
   let [verticalBar, setVerticalBar] = useState(
     <div>
@@ -20,7 +21,7 @@ export default function ModuleMenu() {
   }
   function handleAddArt(event) {
     event.preventDefault();
-    setVerticalBar(<AddArtMenu />);
+    setVerticalBar(<AddArtMenu stateFunction={setVerticalBar} />);
   }
   function handleUpload(event) {
     event.preventDefault();
@@ -40,9 +41,28 @@ export default function ModuleMenu() {
       </div>
     );
   }
+
   function handleViewLayers(event) {
     event.preventDefault();
     setVerticalBar(<LayersView />);
+    /* const containerSelector = "#SimpleList .StackedList";
+    const containers = document.querySelectorAll(containerSelector);
+
+    if (containers.length === 0) {
+      return false;
+    }
+
+    const sortable = new Sortable(containers, {
+      draggable: ".StackedListItem--isDraggable",
+      mirror: {
+        appendTo: containerSelector,
+        constrainDimensions: true,
+      },
+    });
+    console.log(containers);
+    if (containers.length !== 0) {
+      setVerticalBar(sortable);
+    } */
   }
 
   return (
@@ -81,16 +101,6 @@ export default function ModuleMenu() {
         <div className="vertical-toolbar-container flex-item">
           {verticalBar}
         </div>
-      </div>
-      <div className="delete-button-container">
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            deleteSelected();
-          }}
-        >
-          Delete
-        </button>
       </div>
     </div>
   );

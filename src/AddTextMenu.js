@@ -24,7 +24,7 @@ export default function AddTextMenu(props) {
           canvas.setActiveObject(text); //set as current active object
           setToggleEdit(<EditTextMenu backFunction={handleBackClick} />);
           canvas.renderAll();
-          console.log(bucket.layers);
+          //console.log(bucket.layers);
         }}
       >
         <input type="text" placeholder="Add text..." onChange={handleChange} />

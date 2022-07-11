@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { addUpload } from "./contents/bucket";
 
 export default function UploadMenu() {
   let [image, setImage] = useState(null);
@@ -7,7 +6,6 @@ export default function UploadMenu() {
   function handleSubmit(event) {
     event.preventDefault();
     alert(`Selected file - ${image.name}`);
-    addUpload(image);
   }
 
   function handleChange(event) {

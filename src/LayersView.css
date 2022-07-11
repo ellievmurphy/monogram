@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  background-color: lightblue;
+  color: #222222;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+  width: max-content;
+  cursor: move;
+}
