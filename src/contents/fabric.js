@@ -102,18 +102,22 @@ function renderIcon(icon) {
 // create a circle object
 const createCircle = () => {
   const defColor = "red";
+  const objId = createId(); //create unique id for object
   const circle = new fabric.Circle({
     radius: 20,
     fill: defColor,
     left: 100,
     top: 100,
+    id: objId,
+    objId: objId,
   });
   bucket.art.push(circle);
   // stores key of element as "object_type"-"color"
-  const objId = createId();
   bucket.art[bucket.art.length - 1].name = "circle - " + defColor;
   bucket.art[bucket.art.length - 1].id = objId;
-  bucket.layers.push(bucket.art[bucket.art.length - 1]);
+  bucket.ids.unshift(objId); //push id to id list
+  const temp = bucket.art[bucket.art.length - 1];
+  bucket.layers.unshift(temp);
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();
@@ -122,20 +126,23 @@ const createCircle = () => {
 // create a rectangle object
 const createRect = () => {
   const defColor = "blue";
+  const objId = createId(); //create unique id for object
   const rect = new fabric.Rect({
     left: 100,
     top: 100,
     fill: "blue",
     width: 50,
     height: 50,
+    id: objId,
+    objId: objId,
   });
-  //console.log(rect);
   bucket.art.push(rect);
   // stores name of element as "object_type"-"color"
-  const objId = createId();
   bucket.art[bucket.art.length - 1].name = `rect - ` + defColor;
   bucket.art[bucket.art.length - 1].id = objId;
-  bucket.layers.push(bucket.art[bucket.art.length - 1]);
+  const temp = bucket.art[bucket.art.length - 1];
+  bucket.layers.unshift(temp);
+  bucket.ids.unshift(objId); //push id to id list
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();
@@ -144,18 +151,22 @@ const createRect = () => {
 // create a text object
 const createText = (text) => {
   const defColor = "black";
+  const objId = createId(); //create unique id for object
   const input = new fabric.Text(text, {
     fontFamily: "Comic Sans",
     left: 150,
     top: 150,
     fill: defColor,
+    id: objId,
+    objId: objId,
   });
   bucket.text.push(input);
   // stores key of elements in array as "text"
-  const objId = createId();
   bucket.text[bucket.text.length - 1].name = text + ` - ` + defColor;
   bucket.text[bucket.text.length - 1].id = objId;
-  bucket.layers.push(bucket.text[bucket.text.length - 1]);
+  const temp = bucket.text[bucket.text.length - 1];
+  bucket.layers.unshift(temp);
+  bucket.ids.unshift(objId); //push id to id list
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();

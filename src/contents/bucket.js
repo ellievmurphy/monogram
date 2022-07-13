@@ -4,6 +4,7 @@ const bucket = {
   text: [],
   uploads: [],
   layers: [],
+  ids: [],
   currMenu: "default",
 };
 
@@ -34,13 +35,20 @@ function changeBackground(color) {
     Recursive function to create a new alpha-numeric id
 */
 function createId() {
-  let ranId = Math.random().toString(36).slice(2);
-  ranId = bucket.layers.map(function (item) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const length = 9;
+  let ranId = "";
+  for (let i = 0; i < length; i++) {
+    const randomNum = Math.floor(Math.random() * characters.length);
+    ranId += characters[randomNum];
+  }
+  /* ranId = bucket.layers.map(function (item) {
     if (item.id === ranId) {
       return createId();
     }
-    return;
   });
+ */
   return ranId;
 }
 

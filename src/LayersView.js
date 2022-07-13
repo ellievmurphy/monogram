@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 import { bucket } from "./contents/bucket";
 import { Reorder } from "framer-motion";
-import Layer from "./Layer";
 import "./LayersView.css";
 
 export default function LayersView() {
-  let [list, setList] = useState(bucket.layers);
+  let [itemIds, setItemIds] = useState([...bucket.ids]); //list of item ids
+  const initList = [...bucket.layers];
 
   function removeItem(idx) {
-    setList(bucket.layers.splice(idx, 1));
+    setItemIds(bucket.layers.splice(idx, 1)); //update list without item at index
   }
 
   return (
-    <Reorder.Group
-      id="layer-container"
-      axis="y"
-      className="draggable-layer-list-container"
-      onReorder={setList}
-      values={list}
-    >
-      {list.map((item, i) => {
+    <Reorder.Group values={itemIds} onReorder={setItemIds}>
+      {itemIds.map((id, i) => {
         return (
-          <Layer
-            className="layer-item--isDraggable"
-            name={item.name}
-            obj={item}
-            key={i}
+          <Item
+            list={initList}
+            key={id}
+            value={id}
+            ssn={id}
             onRemove={removeItem}
           />
         );
@@ -33,3 +27,13 @@ export default function LayersView() {
     </Reorder.Group>
   );
 }
+
+const Item = ({ value, list }) => {
+  return (
+    <Reorder.Item drag="y" value={value}>
+      <h1 className="layer-item-button-wrapper">
+        {list.find((element) => element.id === value).name}
+      </h1>
+    </Reorder.Item>
+  );
+};
