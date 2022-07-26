@@ -1,6 +1,7 @@
 import { fabric } from "fabric";
-import { bucket, createId } from "./bucket";
+import { bucket, createId, cloneObj, removeObj } from "./bucket";
 import editIcon from "../images/edit-button.svg";
+import { transform } from "framer-motion";
 
 // create a wrapper around native canvas element (with id="c")
 var canvas = new fabric.Canvas("c", { preserveObjectStacking: true });
@@ -44,10 +45,11 @@ function deleteSelected() {
 //clone selected object
 function cloneObject(eventData, transform) {
   var target = transform.target;
-  var canvas = target.canvas;
+  //var canvas = target.canvas;
   target.clone(function (cloned) {
     cloned.left += 10;
     cloned.top += 10;
+    cloneObj(cloned);
     canvas.add(cloned);
   });
 }
@@ -59,7 +61,7 @@ function createDeleteIcon() {
     offsetY: 16,
     offsetX: 16,
     cursorStyle: "pointer",
-    mouseUpHandler: deleteSelected,
+    mouseUpHandler: removeObj,
     render: renderIcon(deleteImg),
     cornerSize: 15,
   });
@@ -111,13 +113,11 @@ const createCircle = () => {
     id: objId,
     objId: objId,
   });
-  bucket.art.push(circle);
   // stores key of element as "object_type"-"color"
-  bucket.art[bucket.art.length - 1].name = "circle - " + defColor;
-  bucket.art[bucket.art.length - 1].id = objId;
-  bucket.ids.unshift(objId); //push id to id list
-  const temp = bucket.art[bucket.art.length - 1];
-  bucket.layers.unshift(temp);
+  bucket.layers.unshift(circle);
+  bucket.layers[0].name = "circle - " + defColor;
+  bucket.layers[0].category = "art";
+  bucket.ids.unshift(objId);
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();
@@ -136,19 +136,17 @@ const createRect = () => {
     id: objId,
     objId: objId,
   });
-  bucket.art.push(rect);
   // stores name of element as "object_type"-"color"
-  bucket.art[bucket.art.length - 1].name = `rect - ` + defColor;
-  bucket.art[bucket.art.length - 1].id = objId;
-  const temp = bucket.art[bucket.art.length - 1];
-  bucket.layers.unshift(temp);
+  bucket.layers.unshift(rect);
+  bucket.layers[0].name = `rect - ` + defColor;
+  bucket.layers[0].category = "art";
   bucket.ids.unshift(objId); //push id to id list
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();
   return rect;
 };
-// create a text object
+// create a text object and return the input from the user
 const createText = (text) => {
   const defColor = "black";
   const objId = createId(); //create unique id for object
@@ -160,12 +158,11 @@ const createText = (text) => {
     id: objId,
     objId: objId,
   });
-  bucket.text.push(input);
   // stores key of elements in array as "text"
-  bucket.text[bucket.text.length - 1].name = text + ` - ` + defColor;
-  bucket.text[bucket.text.length - 1].id = objId;
-  const temp = bucket.text[bucket.text.length - 1];
-  bucket.layers.unshift(temp);
+  bucket.layers.unshift(input);
+  bucket.layers[0].name = text + ` - ` + defColor;
+  bucket.layers[0].category = "text";
+  bucket.layers[0].data = text;
   bucket.ids.unshift(objId); //push id to id list
   createDeleteIcon();
   createCloneIcon();
@@ -195,6 +192,7 @@ function changeLayer(direction) {
 
 export {
   canvas,
+  deleteIcon,
   createCircle,
   createRect,
   createText,

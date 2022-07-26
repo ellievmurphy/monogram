@@ -1,12 +1,74 @@
+import { canvas, createCircle, createText, createRect } from "./fabric-lib";
+
 const bucket = {
   background: "grey",
-  art: [],
-  text: [],
   uploads: [],
   layers: [],
   ids: [],
   currMenu: "default",
 };
+
+function cloneObj(obj) {
+  //   let objInBucket = bucket.layers.find(obj.objId);
+  //   let type = objInBucket.type;
+  //   if (type === "text") {
+  //     addText(objInBucket.data);
+  //   } else {
+  //     addObj(type);
+  //   }
+  //   canvas.getActiveObjects.forEach((obj) => {
+  console.log(obj);
+  console.log("before: " + bucket.layers);
+  //   var idx = bucket.layers.indexOf(obj);
+  //   if (idx > -1) {
+  var id = createId();
+  bucket.layers.unshift(obj);
+  bucket.layers[0].objId = id;
+  bucket.layers[0].id = id;
+  bucket.ids.unshift(id);
+  //   }
+  console.log(bucket.layers);
+  //   });
+}
+
+function addText(input) {
+  const text = createText(input); //create text fabric object
+  //   console.log(text);
+  canvas.add(text); //add to canvas
+  canvas.setActiveObject(text); //set as current active object
+  canvas.renderAll();
+}
+
+function addObj(type) {
+  var obj;
+  if (type === "circle") {
+    obj = createCircle();
+  } else if (type === "rect") {
+    obj = createRect();
+  }
+  canvas.add(obj);
+  canvas.setActiveObject(obj);
+  //openEdit(event, obj);
+  canvas.renderAll();
+}
+
+function removeObj() {
+  canvas.getActiveObjects().forEach((obj) => {
+    var idx = bucket.layers.indexOf(obj);
+    if (idx > -1) {
+      bucket.layers.splice(idx, 1);
+    }
+    idx = bucket.ids.indexOf(obj.objId);
+    if (idx > -1) {
+      bucket.ids.splice(idx, 1);
+    }
+    canvas.remove(obj);
+    //update layers
+    //showLayers()
+  });
+  canvas.discardActiveObject().renderAll();
+  return bucket.layers;
+}
 
 function changeBackground(color) {
   bucket.background = color;
@@ -31,9 +93,7 @@ function changeBackground(color) {
     });
 } */
 
-/*
-    Recursive function to create a new alpha-numeric id
-*/
+/* Recursive function to create a new alpha-numeric id */
 function createId() {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -43,13 +103,20 @@ function createId() {
     const randomNum = Math.floor(Math.random() * characters.length);
     ranId += characters[randomNum];
   }
-  /* ranId = bucket.layers.map(function (item) {
+  bucket.layers.map(function (item) {
     if (item.id === ranId) {
       return createId();
     }
   });
- */
   return ranId;
 }
 
-export { bucket, changeBackground, createId };
+export {
+  bucket,
+  changeBackground,
+  createId,
+  addText,
+  addObj,
+  cloneObj,
+  removeObj,
+};

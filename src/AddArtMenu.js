@@ -9,57 +9,74 @@ import {
   FaHeart,
   FaBrain,
 } from "react-icons/fa";
-import { createCircle, canvas, createRect } from "./contents/fabric";
+import { bucket } from "./contents/bucket";
+import editIcon from "./images/edit-button.svg";
+import {
+  createCircle,
+  createRect,
+  canvas,
+  deleteIcon,
+} from "./contents/fabric-lib";
 
 import "./AddArtMenu.css";
 export default function AddArtMenu() {
+  //let [artLayers, setArtLayers] = useState([]);
+  let artLayers = [];
+  const artMenu = (
+    <div>
+      <form className="category-button-container">
+        <button
+          onClick={handleClickPop}
+          className="category-button popular-cat"
+        >
+          <FaHeart />
+          <h4>{`Most Popular`}</h4>
+        </button>
+        <button
+          onClick={handleClickEmoji}
+          className="category-button emojis-cat"
+        >
+          <FaAngellist />
+          <h4>Emojis</h4>
+        </button>
+        <button
+          onClick={handleClickSym}
+          className="category-button symbols-cat"
+        >
+          <FaAt />
+          <h4>{`Symbols & Shapes`}</h4>
+        </button>
+        <button
+          onClick={handleClickAni}
+          className="category-button animals-cat"
+        >
+          <FaDog />
+          <h4>Animals</h4>
+        </button>
+        <button onClick={handleClickNat} className="category-button nature-cat">
+          <FaLeaf />
+          <h4>Nature</h4>
+        </button>
+        <button onClick={handleClickFD} className="category-button food-cat">
+          <FaCoffee />
+          <h4>{`Food & Drink`}</h4>
+        </button>
+      </form>
+    </div>
+  );
+  function checkType(obj) {
+    return obj.category === "art";
+  }
+  let [artDisplay, setArtDisplay] = useState(artMenu);
+
   function goBack(event) {
     event.preventDefault();
-    setArtDisplay(
-      <div>
-        <form className="category-button-container">
-          <button
-            onClick={handleClickPop}
-            className="category-button popular-cat"
-          >
-            <FaHeart />
-            <h4>{`Most Popular`}</h4>
-          </button>
-          <button
-            onClick={handleClickEmoji}
-            className="category-button emojis-cat"
-          >
-            <FaAngellist />
-            <h4>Emojis</h4>
-          </button>
-          <button
-            onClick={handleClickSym}
-            className="category-button symbols-cat"
-          >
-            <FaAt />
-            <h4>{`Symbols & Shapes`}</h4>
-          </button>
-          <button
-            onClick={handleClickAni}
-            className="category-button animals-cat"
-          >
-            <FaDog />
-            <h4>Animals</h4>
-          </button>
-          <button
-            onClick={handleClickNat}
-            className="category-button nature-cat"
-          >
-            <FaLeaf />
-            <h4>Nature</h4>
-          </button>
-          <button onClick={handleClickFD} className="category-button food-cat">
-            <FaCoffee />
-            <h4>{`Food & Drink`}</h4>
-          </button>
-        </form>
-      </div>
-    );
+    setArtDisplay(artMenu);
+  }
+
+  function handleClickDefault() {
+    artLayers = bucket.layers.filter(checkType);
+    setArtDisplay(<ArtTabs list={artLayers} menuPage={artMenu} />);
   }
 
   function openEdit(event, obj) {
@@ -105,10 +122,11 @@ export default function AddArtMenu() {
             <button
               onClick={(event) => {
                 event.preventDefault();
-                const circle = createCircle();
-                canvas.add(circle);
-                canvas.setActiveObject(circle);
-                openEdit(event, circle);
+                const obj = createCircle();
+                canvas.add(obj);
+                canvas.setActiveObject(obj);
+                handleClickDefault();
+                //openEdit(event, obj);
                 canvas.renderAll();
               }}
             >
@@ -119,10 +137,11 @@ export default function AddArtMenu() {
             <button
               onClick={(event) => {
                 event.preventDefault();
-                const rect = createRect();
-                canvas.add(rect);
-                canvas.setActiveObject(rect);
-                openEdit(event, rect);
+                const obj = createRect();
+                canvas.add(obj);
+                canvas.setActiveObject(obj);
+                handleClickDefault();
+                //openEdit(event, obj);
                 canvas.renderAll();
               }}
             >
@@ -179,48 +198,72 @@ export default function AddArtMenu() {
     );
   }
 
-  let [artDisplay, setArtDisplay] = useState(
-    <div>
-      <form className="category-button-container">
-        <button
-          onClick={handleClickPop}
-          className="category-button popular-cat"
-        >
-          <FaHeart />
-          <h4>{`Most Popular`}</h4>
-        </button>
-        <button
-          onClick={handleClickEmoji}
-          className="category-button emojis-cat"
-        >
-          <FaAngellist />
-          <h4>Emojis</h4>
-        </button>
-        <button
-          onClick={handleClickSym}
-          className="category-button symbols-cat"
-        >
-          <FaAt />
-          <h4>{`Symbols & Shapes`}</h4>
-        </button>
-        <button
-          onClick={handleClickAni}
-          className="category-button animals-cat"
-        >
-          <FaDog />
-          <h4>Animals</h4>
-        </button>
-        <button onClick={handleClickNat} className="category-button nature-cat">
-          <FaLeaf />
-          <h4>Nature</h4>
-        </button>
-        <button onClick={handleClickFD} className="category-button food-cat">
-          <FaCoffee />
-          <h4>{`Food & Drink`}</h4>
-        </button>
-      </form>
-    </div>
-  );
-
   return <div className="nav-image-category-container">{artDisplay}</div>;
 }
+
+const ArtTabs = ({ list, menuPage }) => {
+  function handleEdit() {
+    updateMenu(<EditArtMenu />);
+  }
+  const artLayers = (
+    <div>
+      {list.map((item, i) => {
+        return (
+          <div
+            style={{
+              width: 200,
+              padding: 10,
+              marginTop: 10,
+              textAlign: "left",
+            }}
+            key={i}
+          >
+            <a href="#">{item.name}</a>
+            <input
+              type="image"
+              src={editIcon}
+              alt="edit icon"
+              style={{ width: 15 }}
+              onClick={handleEdit}
+            />
+            <input
+              type="image"
+              src={deleteIcon}
+              alt="delete icon"
+              style={{ width: 15 }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+  let [selectedMenu, setSelectedMenu] = useState(artLayers);
+  function updateMenu(menu) {
+    setSelectedMenu(menu);
+  }
+  return (
+    <div>
+      <nav style={{ display: "flex" }}>
+        <button
+          style={{ width: 125 }}
+          onClick={(event) => {
+            event.preventDefault();
+            setSelectedMenu(artLayers);
+          }}
+        >
+          Edit Current Layers
+        </button>
+        <button
+          style={{ width: 125 }}
+          onClick={(event) => {
+            event.preventDefault();
+            setSelectedMenu(menuPage);
+          }}
+        >
+          Add New Art
+        </button>
+      </nav>
+      {selectedMenu}
+    </div>
+  );
+};

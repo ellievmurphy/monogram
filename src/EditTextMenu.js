@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CompactPicker } from "react-color";
-import { canvas } from "./contents/fabric";
+import { canvas } from "./contents/fabric-lib";
 
 export default function EditTextMenu(props) {
   let [showMenu, setShowMenu] = useState(false);
@@ -46,9 +46,9 @@ export default function EditTextMenu(props) {
           <li>Text Size:</li>
         </ul>
       </form>
-      <button className="back-button" onClick={props.backFunction}>
+      {/* <button className="back-button" onClick={props.backFunction}>
         Back
-      </button>
+      </button> */}
     </div>
   );
 }

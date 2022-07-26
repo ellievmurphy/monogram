@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
 import { CompactPicker } from "react-color";
-import { updateBackground } from "./contents/fabric";
+import { updateBackground } from "./contents/fabric-lib";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import "fabric";

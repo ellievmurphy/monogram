@@ -1,5 +1,5 @@
 import React from "react";
-import { canvas, changeLayer } from "./contents/fabric";
+import { canvas, changeLayer } from "./contents/fabric-lib";
 import { CompactPicker } from "react-color";
 
 export default function EditArtMenu(props) {

@@ -1,0 +1,7 @@
+nav {
+  display: flex;
+}
+button {
+  display: block;
+  list-style: none;
+}
