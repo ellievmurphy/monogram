@@ -46,12 +46,16 @@ function deleteSelected() {
 function cloneObject(eventData, transform) {
   var target = transform.target;
   //var canvas = target.canvas;
-  target.clone(function (cloned) {
-    cloned.left += 10;
-    cloned.top += 10;
-    cloneObj(cloned);
-    canvas.add(cloned);
-  });
+  target.clone(
+    function (cloned) {
+      cloned.left += 10;
+      cloned.top += 10;
+      cloneObj(cloned);
+      //   var name = target.name;
+      canvas.add(cloned);
+    },
+    ["name"]
+  );
 }
 
 function createDeleteIcon() {

@@ -9,18 +9,6 @@ const bucket = {
 };
 
 function cloneObj(obj) {
-  //   let objInBucket = bucket.layers.find(obj.objId);
-  //   let type = objInBucket.type;
-  //   if (type === "text") {
-  //     addText(objInBucket.data);
-  //   } else {
-  //     addObj(type);
-  //   }
-  //   canvas.getActiveObjects.forEach((obj) => {
-  console.log(obj);
-  console.log("before: " + bucket.layers);
-  //   var idx = bucket.layers.indexOf(obj);
-  //   if (idx > -1) {
   var id = createId();
   bucket.layers.unshift(obj);
   bucket.layers[0].objId = id;

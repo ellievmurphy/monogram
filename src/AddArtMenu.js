@@ -9,7 +9,8 @@ import {
   FaHeart,
   FaBrain,
 } from "react-icons/fa";
-import { bucket } from "./contents/bucket";
+import { AiOutlineReload } from "react-icons/ai";
+import { bucket, removeObj } from "./contents/bucket";
 import editIcon from "./images/edit-button.svg";
 import {
   createCircle,
@@ -67,22 +68,26 @@ export default function AddArtMenu() {
   function checkType(obj) {
     return obj.category === "art";
   }
-  let [artDisplay, setArtDisplay] = useState(artMenu);
+  let [artDisplay, setArtDisplay] = useState(
+    <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
+  );
 
-  function goBack(event) {
-    event.preventDefault();
-    setArtDisplay(artMenu);
-  }
+  //   function goBack(event) {
+  //     event.preventDefault();
+  //     setArtDisplay(artMenu);
+  //   }
 
   function handleClickDefault() {
     artLayers = bucket.layers.filter(checkType);
-    setArtDisplay(<ArtTabs list={artLayers} menuPage={artMenu} />);
+    setArtDisplay(
+      <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
+    );
   }
 
-  function openEdit(event, obj) {
-    event.preventDefault();
-    setArtDisplay(<EditArtMenu backFunction={goBack} currObj={obj} />);
-  }
+  //   function openEdit(event, obj) {
+  //     event.preventDefault();
+  //     setArtDisplay(<EditArtMenu backFunction={goBack} currObj={obj} />);
+  //   }
 
   function handleClickPop(event) {
     event.preventDefault();
@@ -91,9 +96,9 @@ export default function AddArtMenu() {
         <h3>
           Popular <FaBrain />
         </h3>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -105,9 +110,9 @@ export default function AddArtMenu() {
         <h3>
           Emoji <FaBrain />
         </h3>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -126,7 +131,6 @@ export default function AddArtMenu() {
                 canvas.add(obj);
                 canvas.setActiveObject(obj);
                 handleClickDefault();
-                //openEdit(event, obj);
                 canvas.renderAll();
               }}
             >
@@ -141,7 +145,6 @@ export default function AddArtMenu() {
                 canvas.add(obj);
                 canvas.setActiveObject(obj);
                 handleClickDefault();
-                //openEdit(event, obj);
                 canvas.renderAll();
               }}
             >
@@ -149,9 +152,9 @@ export default function AddArtMenu() {
             </button>
           </li>
         </ul>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -163,9 +166,9 @@ export default function AddArtMenu() {
         <h3>
           Nature <FaBrain />
         </h3>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -177,9 +180,9 @@ export default function AddArtMenu() {
         <h3>
           Animals <FaBrain />
         </h3>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -191,9 +194,9 @@ export default function AddArtMenu() {
         <h3>
           Food and Drink <FaBrain />
         </h3>
-        <button className="back-button" onClick={goBack}>
+        {/* <button className="back-button" onClick={goBack}>
           back
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -201,42 +204,56 @@ export default function AddArtMenu() {
   return <div className="nav-image-category-container">{artDisplay}</div>;
 }
 
-const ArtTabs = ({ list, menuPage }) => {
+const ArtTabs = ({ list, menuPage, filterFunction }) => {
   function handleEdit() {
     updateMenu(<EditArtMenu />);
   }
-  const artLayers = (
-    <div>
-      {list.map((item, i) => {
-        return (
-          <div
-            style={{
-              width: 200,
-              padding: 10,
-              marginTop: 10,
-              textAlign: "left",
-            }}
-            key={i}
-          >
-            <a href="#">{item.name}</a>
-            <input
-              type="image"
-              src={editIcon}
-              alt="edit icon"
-              style={{ width: 15 }}
-              onClick={handleEdit}
-            />
-            <input
-              type="image"
-              src={deleteIcon}
-              alt="delete icon"
-              style={{ width: 15 }}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
+  function loadLayers() {
+    list = bucket.layers.filter(filterFunction);
+  }
+  const artLayers = () => {
+    if (list.length === 0) {
+      return <div>no art? oh... ok</div>;
+    } else {
+      return (
+        <div>
+          {loadLayers()}
+          {list.map((item, i) => {
+            return (
+              <div
+                style={{
+                  width: 200,
+                  padding: 10,
+                  marginTop: 10,
+                  textAlign: "left",
+                }}
+                key={i}
+              >
+                <a href="#">{item.name}</a>
+                <input
+                  type="image"
+                  src={editIcon}
+                  alt="edit icon"
+                  style={{ width: 15 }}
+                  onClick={handleEdit}
+                />
+                <input
+                  type="image"
+                  src={deleteIcon}
+                  alt="delete icon"
+                  style={{ width: 15 }}
+                  onClick={() => {
+                    removeObj();
+                    list = loadLayers();
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  };
   let [selectedMenu, setSelectedMenu] = useState(artLayers);
   function updateMenu(menu) {
     setSelectedMenu(menu);
@@ -261,6 +278,9 @@ const ArtTabs = ({ list, menuPage }) => {
           }}
         >
           Add New Art
+        </button>
+        <button style={{ marginLeft: 50 }}>
+          <AiOutlineReload />
         </button>
       </nav>
       {selectedMenu}

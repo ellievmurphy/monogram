@@ -5,73 +5,75 @@ import editIcon from "./images/edit-button.svg";
 import EditTextMenu from "./EditTextMenu";
 
 export default function AddTextMenu(props) {
-  const [input, setInput] = useState("New text");
-  //   const [textLayers, setTextLayers] = useState([]);
+  //   const [input, setInput] = useState("New text");
   let textLayers = [];
-  //   function handleBackClick(event) {
-  //     event.preventDefault();
-  //     setToggleEdit(null);
-  //   }
-
-  //   const handleChange = (event) => {
-  //     setInput(event.target.value);
-  //   };
+  let input = "";
 
   function checkType(obj) {
-    return obj.category === "text"; //working?
+    return obj.category === "text";
   }
 
   const addPage = (
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        if (input.length === 0) {
+          input = "New Text";
+        }
         addText(input);
-        // setTextLayers(bucket.layers.filter(checkType));
-        textLayers = bucket.layers.filter(checkType);
       }}
     >
       <input
         type="text"
         placeholder="Add text..."
         onChange={(event) => {
-          setInput(event.target.value);
+          input = event.target.value;
         }}
       />
       <input type="submit" />
     </form>
   );
 
-  const handleSubmit = () => {
-    addText(input);
-    // console.log(bucket.layers[0].category);
-    // setTextLayers(bucket.layers.filter(checkType));
-    // let list = bucket.layers.filter(checkType);
-    // console.log(list);
-    textLayers = bucket.layers.filter(checkType);
-    console.log(textLayers);
-    setTextPage(<TextTabs list={textLayers} addPage={addPage} />);
-  };
+  //   const handleSubmit = () => {
+  //     addText(input);
+  //     // console.log(bucket.layers[0].category);
+  //     // setTextLayers(bucket.layers.filter(checkType));
+  //     // let list = bucket.layers.filter(checkType);
+  //     // console.log(list);
+  //     textLayers = bucket.layers.filter(checkType);
+  //     console.log(textLayers);
+  //     // setTextPage(
+  //     //   <TextTabs
+  //     //     list={textLayers}
+  //     //     addPage={addPage}
+  //     //     filterFunction={checkType}
+  //     //   />
+  //     // );
+  //   };
 
-  const defaultPage = (
-    <form
-      onSubmit={(event) => {
-        console.log("a");
-        event.preventDefault();
-        handleSubmit();
-      }}
-    >
-      <input
-        type="text"
-        placeholder="Add text..."
-        onChange={(event) => {
-          setInput(event.target.value);
-        }}
-      />
-      <input type="submit" />
-    </form>
-  );
+  //   const defaultPage = (
+  //     //update default page to have text tabs
+  //     <form
+  //       onSubmit={(event) => {
+  //         console.log("a");
+  //         event.preventDefault();
+  //         handleSubmit();
+  //       }}
+  //     >
+  //       <input
+  //         type="text"
+  //         placeholder="Add text..."
+  //         onChange={(event) => {
+  //           setInput(event.target.value);
+  //         }}
+  //       />
+  //       <input type="submit" />
+  //     </form>
+  //   );
 
-  const [textPage, setTextPage] = useState(defaultPage);
+  //   const [textPage, setTextPage] = useState(
+  //     <TextTabs list={textLayers} addPage={addPage} filterFunction={checkType} />
+  //   );
 
   //   let [txtPage, setTxtPage] = useState(
   //     <form
@@ -96,48 +98,69 @@ export default function AddTextMenu(props) {
   //     return <TextTabs list={textLayers} addPage={addPage} />;
   //   } else return <div>{defaultPage}</div>;
 
-  return <div>{textPage}</div>;
+  return (
+    <div>
+      <TextTabs
+        list={textLayers}
+        addPage={addPage}
+        filterFunction={checkType}
+      />
+    </div>
+  );
 }
 
-const TextTabs = ({ list, addPage }) => {
+const TextTabs = ({ list, addPage, filterFunction }) => {
   function handleEdit() {
     updateMenu(<EditTextMenu />);
   }
-
-  const textLayers = (
-    <div>
-      {list.map((item, i) => {
-        return (
-          <div
-            style={{
-              width: 200,
-              padding: 10,
-              marginTop: 10,
-              textAlign: "left",
-            }}
-            key={i}
-          >
-            <a href="#">{item.name}</a>
-            <input
-              type="image"
-              src={editIcon}
-              alt="edit icon"
-              style={{ width: 15 }}
-              onClick={handleEdit}
-            />
-            <input
-              type="image"
-              src={deleteIcon}
-              alt="delete icon"
-              style={{ width: 15 }}
-              onClick={(list = removeObj)}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-  let [selectedMenu, setSelectedMenu] = useState(textLayers);
+  function loadLayers() {
+    list = bucket.layers.filter(filterFunction);
+  }
+  const textLayers = () => {
+    loadLayers();
+    if (list.length === 0) {
+      return <div>ADD TEXT PLEASE!!</div>;
+    } else {
+      return (
+        <div>
+          {list.map((item, i) => {
+            return (
+              <div
+                style={{
+                  width: 200,
+                  padding: 10,
+                  marginTop: 10,
+                  textAlign: "left",
+                }}
+                key={i}
+              >
+                <a href="#">{item.name}</a>
+                <input
+                  type="image"
+                  src={editIcon}
+                  alt="edit icon"
+                  style={{ width: 15 }}
+                  onClick={handleEdit}
+                />
+                <input
+                  type="image"
+                  src={deleteIcon}
+                  alt="delete icon"
+                  style={{ width: 15 }}
+                  onClick={() => {
+                    removeObj();
+                    list = loadLayers();
+                    //look at layersView when update list
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  };
+  const [selectedMenu, setSelectedMenu] = useState(textLayers);
   function updateMenu(menu) {
     setSelectedMenu(menu);
   }
