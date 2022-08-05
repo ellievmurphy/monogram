@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { bucket, addText, removeObj } from "./contents/bucket";
-import { deleteIcon } from "./contents/fabric-lib";
+import { deleteIcon, canvas } from "./contents/fabric-lib";
 import editIcon from "./images/edit-button.svg";
 import EditTextMenu from "./EditTextMenu";
 
+// Main React component for AddTextMenu. Has the ability to add / edit / remove text and
+// view different text layers.
 export default function AddTextMenu(props) {
-  //   const [input, setInput] = useState("New text");
+  // textLayers stores only the bucket.layers elements which are an instance of Fabric.Text objects
   let textLayers = [];
+  // maintains the user's input to be displayed when text objects are added to the canvas
   let input = "";
 
+  // function used by
   function checkType(obj) {
     return obj.category === "text";
   }
@@ -133,24 +137,30 @@ const TextTabs = ({ list, addPage, filterFunction }) => {
                   textAlign: "left",
                 }}
                 key={i}
+                id={item.objId}
               >
-                <a href="#">{item.name}</a>
+                <a
+                  href="#"
+                  onClick={() => {
+                    console.log(canvas.setActiveObject(item));
+                  }}
+                >
+                  {item.name}
+                </a>
                 <input
                   type="image"
                   src={editIcon}
                   alt="edit icon"
-                  style={{ width: 15 }}
+                  style={{ marginLeft: 10, width: 15 }}
                   onClick={handleEdit}
                 />
                 <input
                   type="image"
                   src={deleteIcon}
                   alt="delete icon"
-                  style={{ width: 15 }}
+                  style={{ marginLeft: 10, width: 15 }}
                   onClick={() => {
                     removeObj();
-                    list = loadLayers();
-                    //look at layersView when update list
                   }}
                 />
               </div>
