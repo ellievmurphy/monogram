@@ -8,25 +8,36 @@ import LayersView from "./LayersView";
 import "fabric";
 import "./ModuleMenu.css";
 
+// Main React component which holds the customization menu used to update products on canvas
 export default function ModuleMenu() {
+  //vertical bar represents the current tab being displayed on the customization menu
   let [verticalBar, setVerticalBar] = useState(
     <div>
       <h4>Welcome!</h4> Select one of the options above
     </div>
   );
 
+  // handles event when text tab is selected from customization menu
+  // updates vertical bar to the AddTextMenu React component
   function handleAddText(event) {
     event.preventDefault();
     setVerticalBar(<AddTextMenu keyword="new text" />);
   }
+  // handles event when art tab is selected from customization menu
+  // updates vertical bar to AddArtMenu React component
+  // passes setVerticalBar function via props to be used in child component
   function handleAddArt(event) {
     event.preventDefault();
     setVerticalBar(<AddArtMenu stateFunction={setVerticalBar} />);
   }
+  // handles event when upload tab is selected from customization menu
+  // updates vertical bar to UploadMenu React component
   function handleUpload(event) {
     event.preventDefault();
     setVerticalBar(<UploadMenu />);
   }
+  // handles event when product color tab is selected from customization menu
+  // updates vertical bar to display the CompactPicker imported from "react-color" library
   function handleChangeColor(event) {
     event.preventDefault();
     setVerticalBar(
@@ -42,32 +53,18 @@ export default function ModuleMenu() {
     );
   }
 
+  // handles event when view layers tab is selected from customization menu
+  // updates vertical bar to LayersView React component
   function handleViewLayers(event) {
     event.preventDefault();
     setVerticalBar(<LayersView />);
-    /* const containerSelector = "#SimpleList .StackedList";
-    const containers = document.querySelectorAll(containerSelector);
-
-    if (containers.length === 0) {
-      return false;
-    }
-
-    const sortable = new Sortable(containers, {
-      draggable: ".StackedListItem--isDraggable",
-      mirror: {
-        appendTo: containerSelector,
-        constrainDimensions: true,
-      },
-    });
-    console.log(containers);
-    if (containers.length !== 0) {
-      setVerticalBar(sortable);
-    } */
   }
 
+  // return statement renders the customization menu and fabricjs canvas on page
   return (
-    //TODO: how to upload images with fabric??
     <div className="top-menu-container">
+      {/* nav attribute holds the different customization tabs and updates verticalBar on selection
+            of one of these tabs */}
       <nav>
         <ul>
           <li className="add-text-button-container">
@@ -97,11 +94,8 @@ export default function ModuleMenu() {
           </li>
         </ul>
       </nav>
-      <div className="canvas-and-friends-container">
-        <div className="vertical-toolbar-container flex-item">
-          {verticalBar}
-        </div>
-      </div>
+      {/* holds the verticalBar state which re-renders every time a new customization tab is selected */}
+      <div className="vertical-toolbar-container flex-item">{verticalBar}</div>
     </div>
   );
 }

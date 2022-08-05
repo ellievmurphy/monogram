@@ -11,8 +11,17 @@ export default function LayersView() {
     setItemIds(bucket.layers.splice(idx, 1)); //update list without item at index
   }
 
+  function handleReorder(list) {
+    setItemIds(list);
+    list.map((id, i) => {
+      var found = initList.find((element) => element.id === id);
+      console.log(found + ": " + i);
+      found.moveTo(list.length - i);
+    });
+  }
+
   return (
-    <Reorder.Group values={itemIds} onReorder={setItemIds}>
+    <Reorder.Group values={itemIds} onReorder={handleReorder}>
       {itemIds.map((id, i) => {
         return (
           <Item

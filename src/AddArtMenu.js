@@ -79,9 +79,9 @@ export default function AddArtMenu() {
 
   function handleClickDefault() {
     artLayers = bucket.layers.filter(checkType);
-    setArtDisplay(
-      <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
-    );
+    // setArtDisplay(
+    //   <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
+    // );
   }
 
   //   function openEdit(event, obj) {
@@ -212,6 +212,7 @@ const ArtTabs = ({ list, menuPage, filterFunction }) => {
     list = bucket.layers.filter(filterFunction);
   }
   const artLayers = () => {
+    loadLayers();
     if (list.length === 0) {
       return <div>no art? oh... ok</div>;
     } else {
@@ -279,9 +280,9 @@ const ArtTabs = ({ list, menuPage, filterFunction }) => {
         >
           Add New Art
         </button>
-        <button style={{ marginLeft: 50 }}>
+        {/* <button style={{ marginLeft: 50 }}>
           <AiOutlineReload />
-        </button>
+        </button> */}
       </nav>
       {selectedMenu}
     </div>

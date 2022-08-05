@@ -41,6 +41,7 @@ function addObj(type) {
 }
 
 function removeObj() {
+  var objId;
   canvas.getActiveObjects().forEach((obj) => {
     var idx = bucket.layers.indexOf(obj);
     if (idx > -1) {
@@ -50,11 +51,17 @@ function removeObj() {
     if (idx > -1) {
       bucket.ids.splice(idx, 1);
     }
+    objId = obj.objId;
     canvas.remove(obj);
     //update layers
     //showLayers()
   });
   canvas.discardActiveObject().renderAll();
+  // TODO: currently deletes properly, but also says "cannot read properties of null"
+  if (objId != null) {
+    console.log(objId);
+    document.getElementById(objId).remove();
+  } //destroy html
   return bucket.layers;
 }
 

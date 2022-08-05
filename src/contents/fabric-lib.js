@@ -168,6 +168,7 @@ const createText = (text) => {
   bucket.layers[0].category = "text";
   bucket.layers[0].data = text;
   bucket.ids.unshift(objId); //push id to id list
+  //   bucket.ids.push(objId);
   createDeleteIcon();
   createCloneIcon();
   createEditIcon();
