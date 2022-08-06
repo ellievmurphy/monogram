@@ -10,13 +10,16 @@ export default function AddTextMenu(props) {
   // textLayers stores only the bucket.layers elements which are an instance of Fabric.Text objects
   let textLayers = [];
   // maintains the user's input to be displayed when text objects are added to the canvas
+  // TODO: currently gets updated during onChange for text input form attribute, would prefer to store this in a state
   let input = "";
 
-  // function used by
+  // function used in conjunction with Array.prototype.filter() function to filter bucket's list of layers
   function checkType(obj) {
+    // filters by element's category property in bucket.layers
     return obj.category === "text";
   }
 
+  // React component stored in addPage represents the submission form used to add a new text element to the canvas
   const addPage = (
     <form
       onSubmit={(event) => {
@@ -38,70 +41,6 @@ export default function AddTextMenu(props) {
     </form>
   );
 
-  //   const handleSubmit = () => {
-  //     addText(input);
-  //     // console.log(bucket.layers[0].category);
-  //     // setTextLayers(bucket.layers.filter(checkType));
-  //     // let list = bucket.layers.filter(checkType);
-  //     // console.log(list);
-  //     textLayers = bucket.layers.filter(checkType);
-  //     console.log(textLayers);
-  //     // setTextPage(
-  //     //   <TextTabs
-  //     //     list={textLayers}
-  //     //     addPage={addPage}
-  //     //     filterFunction={checkType}
-  //     //   />
-  //     // );
-  //   };
-
-  //   const defaultPage = (
-  //     //update default page to have text tabs
-  //     <form
-  //       onSubmit={(event) => {
-  //         console.log("a");
-  //         event.preventDefault();
-  //         handleSubmit();
-  //       }}
-  //     >
-  //       <input
-  //         type="text"
-  //         placeholder="Add text..."
-  //         onChange={(event) => {
-  //           setInput(event.target.value);
-  //         }}
-  //       />
-  //       <input type="submit" />
-  //     </form>
-  //   );
-
-  //   const [textPage, setTextPage] = useState(
-  //     <TextTabs list={textLayers} addPage={addPage} filterFunction={checkType} />
-  //   );
-
-  //   let [txtPage, setTxtPage] = useState(
-  //     <form
-  //       onSubmit={(event) => {
-  //         event.preventDefault();
-  //         addText(input);
-  //         setTextLayers(bucket.layers.filter(checkType));
-  //       }}
-  //     >
-  //       <input type="text" placeholder="Add text..." onChange={handleChange} />
-  //       <input type="submit" />
-  //     </form>
-  //   );
-
-  //   if (textLayers.length > 0) {
-  //     return <TextTabs list={textLayers} addPage={addPage} />;
-  //   } else {
-  //     return defaultPage;
-  //   }
-
-  //   if (toggleShowSub) {
-  //     return <TextTabs list={textLayers} addPage={addPage} />;
-  //   } else return <div>{defaultPage}</div>;
-
   return (
     <div>
       <TextTabs
@@ -113,6 +52,15 @@ export default function AddTextMenu(props) {
   );
 }
 
+/**
+ * React component stored in TextTabs const. Creates the interface for viewing existing layers or adding new layers.
+ * Does not contain the implementation for the page to add new text, this is located in main component in variable "AddPage"
+ * @param list represents the list of text layers to print in "Existing Layers tab"
+ * @param addPage passes the variable containing the implementation for adding text from main component to TextTabs
+ * @param filterFunction passes the checkType() function used to filter bucket.layers from main component to TextTabs
+ * @return main implementation of ModuleMenu sub-page under Add Text category
+ *           which provides an interface to view and add text layers to the canvas
+ */
 const TextTabs = ({ list, addPage, filterFunction }) => {
   function handleEdit() {
     updateMenu(<EditTextMenu />);
