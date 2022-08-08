@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { bucket, addText, removeObj } from "./contents/bucket";
+import {
+  bucket,
+  addText,
+  removeObj,
+  loadFilteredLayers,
+} from "./contents/bucket";
 import { deleteIcon, canvas } from "./contents/fabric-lib";
 import editIcon from "./images/edit-button.svg";
 import EditTextMenu from "./EditTextMenu";
 
 // Main React component for AddTextMenu. Has the ability to add / edit / remove text and
 // view different text layers.
+// Depends on bucket.layers from ./contents/bucket.js for the list of layers and addText / removeObj for
+//   adding and removing text elements from the canvas
 export default function AddTextMenu(props) {
   // textLayers stores only the bucket.layers elements which are an instance of Fabric.Text objects
   let textLayers = [];
@@ -62,12 +69,17 @@ export default function AddTextMenu(props) {
  *           which provides an interface to view and add text layers to the canvas
  */
 const TextTabs = ({ list, addPage, filterFunction }) => {
+  // used as an event listener function to toggle the visibility of the text-editing page
   function handleEdit() {
     updateMenu(<EditTextMenu />);
   }
+  // function used to refresh / load the filtered version of bucket.layers with only text elements
   function loadLayers() {
-    list = bucket.layers.filter(filterFunction);
+    list = loadFilteredLayers(filterFunction);
   }
+
+  // const stores a React.Component implementation for displaying the layers of text on the canvas,
+  // or a message prompting the user to add text if none exist.
   const textLayers = () => {
     loadLayers();
     if (list.length === 0) {
@@ -118,7 +130,10 @@ const TextTabs = ({ list, addPage, filterFunction }) => {
       );
     }
   };
+
+  // useState which stores the selectedMenu (edit existing text / add new text)
   const [selectedMenu, setSelectedMenu] = useState(textLayers);
+  // function used to update selectedMenu state to the provided menu parameter (must be a react component or null)
   function updateMenu(menu) {
     setSelectedMenu(menu);
   }

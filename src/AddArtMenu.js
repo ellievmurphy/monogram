@@ -9,20 +9,25 @@ import {
   FaHeart,
   FaBrain,
 } from "react-icons/fa";
-import { AiOutlineReload } from "react-icons/ai";
-import { bucket, removeObj } from "./contents/bucket";
-import editIcon from "./images/edit-button.svg";
 import {
-  createCircle,
-  createRect,
-  canvas,
-  deleteIcon,
-} from "./contents/fabric-lib";
+  bucket,
+  removeObj,
+  addArt,
+  loadFilteredLayers,
+} from "./contents/bucket";
+import editIcon from "./images/edit-button.svg";
+import { canvas, deleteIcon } from "./contents/fabric-lib";
 
 import "./AddArtMenu.css";
+
+// main React.Component which contains the implementation for interface to add / edit clip-art on the canvas.
+// depends on bucket.layers from ./contents/bucket for the list of art layers and addArt() for adding clip-
+//   art to the canvas
 export default function AddArtMenu() {
   //let [artLayers, setArtLayers] = useState([]);
+  // List representing the art layers contained in bucket.layers list
   let artLayers = [];
+  // React.Component implementation of the main selection menu for adding art to the page
   const artMenu = (
     <div>
       <form className="category-button-container">
@@ -65,9 +70,14 @@ export default function AddArtMenu() {
       </form>
     </div>
   );
+
+  // function used by Array.prototype.filter() function to filter art layers from bucket.layers list based on
+  //   the category property of the obj passed in the parameter
   function checkType(obj) {
     return obj.category === "art";
   }
+  // useState containing the current menu selected from artMenu
+  // default value is set to render the ArtTabs React.Component defined below main component
   let [artDisplay, setArtDisplay] = useState(
     <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
   );
@@ -77,17 +87,12 @@ export default function AddArtMenu() {
   //     setArtDisplay(artMenu);
   //   }
 
+  // The functions defined below are used to handle which menu option is selected from the artMenu page
+  //   when a button is pressed for a new menu, the artDisplay state will be updated, and thus re-rendered,
+  //   based on the menu selected.
   function handleClickDefault() {
     artLayers = bucket.layers.filter(checkType);
-    // setArtDisplay(
-    //   <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
-    // );
   }
-
-  //   function openEdit(event, obj) {
-  //     event.preventDefault();
-  //     setArtDisplay(<EditArtMenu backFunction={goBack} currObj={obj} />);
-  //   }
 
   function handleClickPop(event) {
     event.preventDefault();
@@ -126,10 +131,7 @@ export default function AddArtMenu() {
           <li>
             <button
               onClick={(event) => {
-                event.preventDefault();
-                const obj = createCircle();
-                canvas.add(obj);
-                canvas.setActiveObject(obj);
+                addArt("circle");
                 handleClickDefault();
                 canvas.renderAll();
               }}
@@ -140,10 +142,7 @@ export default function AddArtMenu() {
           <li>
             <button
               onClick={(event) => {
-                event.preventDefault();
-                const obj = createRect();
-                canvas.add(obj);
-                canvas.setActiveObject(obj);
+                addArt("rect");
                 handleClickDefault();
                 canvas.renderAll();
               }}
@@ -204,12 +203,16 @@ export default function AddArtMenu() {
   return <div className="nav-image-category-container">{artDisplay}</div>;
 }
 
+// React.Component implementation used to display the AddArtMenu sub-page allowing users to add / view
+// art layers on the canvas.
 const ArtTabs = ({ list, menuPage, filterFunction }) => {
+  // event listener response which toggles the edit menu for clip art
   function handleEdit() {
     updateMenu(<EditArtMenu />);
   }
+  // used to
   function loadLayers() {
-    list = bucket.layers.filter(filterFunction);
+    list = loadFilteredLayers(filterFunction);
   }
   const artLayers = () => {
     loadLayers();

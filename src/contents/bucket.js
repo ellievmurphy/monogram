@@ -27,6 +27,21 @@ function addText(input) {
   canvas.renderAll();
 }
 
+function loadFilteredLayers(filterFunction) {
+  return bucket.layers.filter(filterFunction);
+}
+
+function addArt(art) {
+  let obj;
+  if (art === "circle") {
+    obj = createCircle();
+  } else if (art === "rect") {
+    obj = createRect();
+  }
+  canvas.add(obj);
+  canvas.setActiveObject(obj);
+}
+
 function addObj(type) {
   var obj;
   if (type === "circle") {
@@ -114,4 +129,6 @@ export {
   addObj,
   cloneObj,
   removeObj,
+  loadFilteredLayers,
+  addArt,
 };
