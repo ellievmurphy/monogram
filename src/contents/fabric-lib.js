@@ -1,7 +1,6 @@
 import { fabric } from "fabric";
 import { bucket, createId, cloneObj, removeObj } from "./bucket";
 import editIcon from "../images/edit-button.svg";
-import { transform } from "framer-motion";
 
 // create a wrapper around native canvas element (with id="c")
 var canvas = new fabric.Canvas("c", { preserveObjectStacking: true });
@@ -181,20 +180,6 @@ function updateBackground(color) {
   canvas.discardActiveObject().renderAll();
 }
 
-function changeLayer(direction) {
-  console.log(direction);
-  if (direction === "sendBack") {
-    canvas.sendBackwards(canvas.getActiveObject());
-  } else if (direction === "bringUp") {
-    canvas.bringForward(canvas.getActiveObject());
-  } else if (direction === "top") {
-    canvas.bringToFront(canvas.getActiveObject());
-  } else if (direction === "bottom") {
-    canvas.sendToBack(canvas.getActiveObject());
-  }
-  canvas.renderAll();
-}
-
 export {
   canvas,
   deleteIcon,
@@ -203,5 +188,4 @@ export {
   createText,
   updateBackground,
   deleteSelected,
-  changeLayer,
 };

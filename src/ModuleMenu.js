@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
-import { CompactPicker } from "react-color";
+import { SketchPicker } from "react-color";
 import { updateBackground } from "./contents/fabric-lib";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
@@ -42,13 +42,11 @@ export default function ModuleMenu() {
     event.preventDefault();
     setVerticalBar(
       <div className="color-change-menu-container">
-        <CompactPicker
+        <SketchPicker
           onChangeComplete={(color) => {
             updateBackground(color);
           }}
         />
-        **add text when hovering over color to indicate what color is being
-        chosen
       </div>
     );
   }

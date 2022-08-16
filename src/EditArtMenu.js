@@ -1,73 +1,46 @@
-import React from "react";
-import { canvas, changeLayer } from "./contents/fabric-lib";
-import { CompactPicker } from "react-color";
+import React, { useState } from "react";
+import { canvas } from "./contents/fabric-lib";
+import { SketchPicker } from "react-color";
+import { updateScale } from "./contents/bucket";
 
 export default function EditArtMenu(props) {
-  var currObj = props.currObj;
+  //   var currObj = props.currObj;
+  const [elemSize, setElemSize] = useState(20);
   return (
     <div>
       <br />
       <form className="edit-art-input-menu-container">
         <ul>
           <li>
-            Fill color:
-            <CompactPicker
+            <label htmlFor="art-scale-slider">Change Scale:</label>
+            <h5>**Doesn't work for Rect yet</h5>
+            <input
+              type="range"
+              name="art-scale-slider"
+              id="art-scale-slider"
+              min="20"
+              max="110"
+              defaultValue="20"
+              step={"1"}
+              onChange={(event) => {
+                setElemSize(event.target.value);
+                updateScale(elemSize);
+              }}
+            />
+          </li>
+          <li>
+            <label htmlFor="object-color">Fill color:</label>
+            <SketchPicker
+              id="object-color"
+              name="object-color"
               onChange={(color) => {
                 canvas.getActiveObject().set("fill", color.hex);
                 canvas.renderAll();
               }}
             />
           </li>
-          <li>Rotation:</li>
-          <li>Outline:</li>
         </ul>
       </form>
-      <button
-        className="layerDown"
-        onClick={(event) => {
-          event.preventDefault();
-          changeLayer("sendBack");
-        }}
-      >
-        Layer down
-      </button>
-      <button
-        className="layerUp"
-        onClick={(event) => {
-          event.preventDefault();
-          changeLayer("bringUp");
-        }}
-      >
-        Layer up
-      </button>
-      <button
-        className="layerBottom"
-        onClick={(event) => {
-          event.preventDefault();
-          changeLayer("bottom");
-        }}
-      >
-        Bottom layer
-      </button>
-      <button
-        className="layerTop"
-        onClick={(event) => {
-          event.preventDefault();
-          changeLayer("top");
-        }}
-      >
-        Top layer
-      </button>
-      <br />
-      <button
-        className="back-button"
-        onClick={(event) => {
-          canvas.discardActiveObject(currObj);
-          props.backFunction(event);
-        }}
-      >
-        back
-      </button>
     </div>
   );
 }

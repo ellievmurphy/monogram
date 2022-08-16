@@ -78,9 +78,10 @@ export default function AddArtMenu() {
   }
   // useState containing the current menu selected from artMenu
   // default value is set to render the ArtTabs React.Component defined below main component
-  let [artDisplay, setArtDisplay] = useState(
+  const tabs = (
     <ArtTabs list={artLayers} menuPage={artMenu} filterFunction={checkType} />
   );
+  let [artDisplay, setArtDisplay] = useState(tabs);
 
   //   function goBack(event) {
   //     event.preventDefault();
@@ -232,6 +233,7 @@ const ArtTabs = ({ list, menuPage, filterFunction }) => {
                   textAlign: "left",
                 }}
                 key={i}
+                id={item.objId}
               >
                 <a href="#">{item.name}</a>
                 <input
@@ -245,10 +247,9 @@ const ArtTabs = ({ list, menuPage, filterFunction }) => {
                   type="image"
                   src={deleteIcon}
                   alt="delete icon"
-                  style={{ width: 15 }}
+                  style={{ marginLeft: 10, width: 15 }}
                   onClick={() => {
                     removeObj();
-                    list = loadLayers();
                   }}
                 />
               </div>

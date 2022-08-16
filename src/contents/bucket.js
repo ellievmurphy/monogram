@@ -56,27 +56,29 @@ function addObj(type) {
 }
 
 function removeObj() {
-  var objId;
+  var num;
   canvas.getActiveObjects().forEach((obj) => {
     var idx = bucket.layers.indexOf(obj);
     if (idx > -1) {
       bucket.layers.splice(idx, 1);
     }
-    idx = bucket.ids.indexOf(obj.objId);
+    num = obj.objId;
+
+    idx = bucket.ids.indexOf(num);
     if (idx > -1) {
       bucket.ids.splice(idx, 1);
     }
-    objId = obj.objId;
     canvas.remove(obj);
     //update layers
     //showLayers()
   });
   canvas.discardActiveObject().renderAll();
-  // TODO: currently deletes properly, but also says "cannot read properties of null"
-  if (objId != null) {
-    console.log(objId);
-    document.getElementById(objId).remove();
+  if (num != null && document.getElementById(num) != null) {
+    console.log(num);
+    document.getElementById(num).remove();
   } //destroy html
+  // TODO: currently deletes properly, but also says "cannot read properties of null"
+
   return bucket.layers;
 }
 
@@ -84,24 +86,22 @@ function changeBackground(color) {
   bucket.background = color;
 }
 
-/* function addUpload(image) {
-  document
-    .getElementById("uploadedImg")
-    .addEventListener("change", function (event) {
-      var img = image;
-      var reader = new FileReader();
-      reader.onload = function (upload) {
-        var data = image.target.result;
-        canvas.Image.fromURL(data, function (img) {
-          var oImg = img.set({ width: 100, height: 100 }).scale(0.9);
-          canvas.add(oImg).renderAll();
-          var a = canvas.setActiveObject(oImg);
-          var dataURL = canvas.toDataURL({ format: "png", quality: 0.8 });
-        });
-      };
-      reader.readAsDataURL(img);
-    });
-} */
+// function onUpload() {}
+
+function changeFont(font) {
+  // TODO: definitely need error checking
+  canvas.getActiveObject().set("fontFamily", font);
+  canvas.renderAll();
+}
+
+function updateScale(size) {
+  //   const size = document.getElementById("scale-slider").value;
+  const currSelect = canvas.getActiveObject();
+  if (currSelect.get("type") === "text") currSelect.set("fontSize", size);
+  else if (currSelect.get("type") === "circle") currSelect.set("radius", size);
+  //   else if (currSelect.get("type") === "rect") currSelect.set("height", size);
+  canvas.renderAll();
+}
 
 /* Recursive function to create a new alpha-numeric id */
 function createId() {
@@ -124,6 +124,7 @@ function createId() {
 export {
   bucket,
   changeBackground,
+  updateScale,
   createId,
   addText,
   addObj,
@@ -131,4 +132,5 @@ export {
   removeObj,
   loadFilteredLayers,
   addArt,
+  changeFont,
 };

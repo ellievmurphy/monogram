@@ -29,6 +29,7 @@ export default function AddTextMenu(props) {
   // React component stored in addPage represents the submission form used to add a new text element to the canvas
   const addPage = (
     <form
+      style={{ marginTop: 15 }}
       onSubmit={(event) => {
         event.preventDefault();
         if (input.length === 0) {

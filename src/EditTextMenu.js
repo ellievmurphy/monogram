@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { CompactPicker } from "react-color";
+import { SketchPicker } from "react-color";
 import { canvas } from "./contents/fabric-lib";
+import { changeFont, updateScale } from "./contents/bucket";
+import "./EditTextMenu.css";
 
 export default function EditTextMenu(props) {
   let [showMenu, setShowMenu] = useState(false);
+  let [fontSize, setFontSize] = useState(100);
+  //   var fonts = ["mono_display"];
   function handleFontDrop(event) {
     event.preventDefault();
 
@@ -13,6 +17,7 @@ export default function EditTextMenu(props) {
       setShowMenu(true);
     }
   }
+
   return (
     <div className="edit-text-menu-container">
       <form className="edit-text-input-form">
@@ -23,32 +28,61 @@ export default function EditTextMenu(props) {
               <button onClick={handleFontDrop}>Fonts</button>
               {showMenu ? (
                 <div id="myDropdown" className="dropdown-content">
-                  <a href="_blank">Font 1</a>
-                  <a href="_blank">Font 2</a>
+                  <a
+                    href="_blank"
+                    id="mono_display"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      changeFont("mono_display");
+                    }}
+                  >
+                    Mono Display
+                  </a>
+                  <br />
+                  <a
+                    href="_blank"
+                    id="arial"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      changeFont("arial");
+                    }}
+                  >
+                    Arial
+                  </a>
+                  <br />
                   <a href="_blank">Font 3</a>
                 </div>
               ) : null}
             </div>
           </li>
           <li>
+            <label htmlFor="scale-slider:">Monogram Scale:</label>
+            <br />
+            <input
+              type={"range"}
+              name="scale-slider"
+              id="scale-slider"
+              min="20"
+              max="110"
+              defaultValue="65"
+              step={"1"}
+              onChange={(event) => {
+                setFontSize(event.target.value);
+                updateScale(fontSize);
+              }}
+            />
+          </li>
+          <li>
             Text color:
-            <CompactPicker
+            <SketchPicker
               onChange={(color) => {
                 canvas.getActiveObject().set("fill", color.hex);
                 canvas.renderAll();
               }}
             />
           </li>
-          <li>Monogram Scale:</li>
-          <li>Rotation:</li>
-          <li>Outline:</li>
-          <li>Text Shape:</li>
-          <li>Text Size:</li>
         </ul>
       </form>
-      {/* <button className="back-button" onClick={props.backFunction}>
-        Back
-      </button> */}
     </div>
   );
 }
