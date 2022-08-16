@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { canvas } from "./contents/fabric-lib";
 import { SketchPicker } from "react-color";
-import { updateScale } from "./contents/bucket";
+// TODO: super weird behavior when this line is removed, despite not being used
+import { canvas } from "./contents/fabric-lib";
+import { changeObjColor, updateScale } from "./contents/bucket";
 
 export default function EditArtMenu(props) {
   //   var currObj = props.currObj;
@@ -34,8 +35,7 @@ export default function EditArtMenu(props) {
               id="object-color"
               name="object-color"
               onChange={(color) => {
-                canvas.getActiveObject().set("fill", color.hex);
-                canvas.renderAll();
+                changeObjColor(color);
               }}
             />
           </li>

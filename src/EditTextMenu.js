@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SketchPicker } from "react-color";
-import { canvas } from "./contents/fabric-lib";
-import { changeFont, updateScale } from "./contents/bucket";
+import { changeFont, changeObjColor, updateScale } from "./contents/bucket";
 import "./EditTextMenu.css";
 
 export default function EditTextMenu(props) {
@@ -76,8 +75,7 @@ export default function EditTextMenu(props) {
             Text color:
             <SketchPicker
               onChange={(color) => {
-                canvas.getActiveObject().set("fill", color.hex);
-                canvas.renderAll();
+                changeObjColor(color);
               }}
             />
           </li>

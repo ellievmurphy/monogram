@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { canvas } from "./contents/fabric-lib";
-import { fabric } from "fabric";
 
 export default function UploadMenu() {
   const [selectedImage, setSelectedImage] = useState(null);
-
   return (
     <div>
       <input

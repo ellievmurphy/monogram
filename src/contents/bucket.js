@@ -94,6 +94,28 @@ function changeFont(font) {
   canvas.renderAll();
 }
 
+/**
+ * Function used to update the color of a fabric.Object on the canvas
+ * Mainly used by the edit menus as the onChange function for the color picker components
+ * @param color represents the color object returned as a result of the onChange function in the
+ *                    color picker component which uses this function.
+ */
+function changeObjColor(color) {
+  // gets the fabric.Object we want to change the color of
+  const currSelect = canvas.getActiveObject();
+  // stores the old fill color of the current object
+  const origFill = bucket.layers.find((e) => e === currSelect).fill;
+  // updates the fill color to be the new color selected
+  currSelect.set("fill", color.hex);
+  // updates the name of the object in bucket.layers list since it uses the hex code of the fill
+  //    color (makes distinguishing objects of same type based on name easier)
+  bucket.layers.find((e) => e === currSelect).name = bucket.layers
+    .find((e) => e === currSelect)
+    .name.replace(origFill, color.hex);
+  // updates the canvas to reflect object's color change
+  canvas.renderAll();
+}
+
 function updateScale(size) {
   //   const size = document.getElementById("scale-slider").value;
   const currSelect = canvas.getActiveObject();
@@ -124,6 +146,7 @@ function createId() {
 export {
   bucket,
   changeBackground,
+  changeObjColor,
   updateScale,
   createId,
   addText,

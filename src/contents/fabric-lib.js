@@ -106,7 +106,7 @@ function renderIcon(icon) {
 
 // create a circle object
 const createCircle = () => {
-  const defColor = "red";
+  const defColor = "#ff0000";
   const objId = createId(); //create unique id for object
   const circle = new fabric.Circle({
     radius: 20,
@@ -118,7 +118,7 @@ const createCircle = () => {
   });
   // stores key of element as "object_type"-"color"
   bucket.layers.unshift(circle);
-  bucket.layers[0].name = "circle - " + defColor;
+  bucket.layers[0].name = "circle - " + circle.fill;
   bucket.layers[0].category = "art";
   bucket.ids.unshift(objId);
   createDeleteIcon();
@@ -128,12 +128,12 @@ const createCircle = () => {
 };
 // create a rectangle object
 const createRect = () => {
-  const defColor = "blue";
+  const defColor = "#0000FF";
   const objId = createId(); //create unique id for object
   const rect = new fabric.Rect({
     left: 100,
     top: 100,
-    fill: "blue",
+    fill: defColor,
     width: 50,
     height: 50,
     id: objId,
@@ -141,7 +141,7 @@ const createRect = () => {
   });
   // stores name of element as "object_type"-"color"
   bucket.layers.unshift(rect);
-  bucket.layers[0].name = `rect - ` + defColor;
+  bucket.layers[0].name = `rect - ` + rect.fill;
   bucket.layers[0].category = "art";
   bucket.ids.unshift(objId); //push id to id list
   createDeleteIcon();
@@ -151,7 +151,7 @@ const createRect = () => {
 };
 // create a text object and return the input from the user
 const createText = (text) => {
-  const defColor = "black";
+  const defColor = "#000000";
   const objId = createId(); //create unique id for object
   const input = new fabric.Text(text, {
     fontFamily: "Comic Sans",
@@ -163,7 +163,7 @@ const createText = (text) => {
   });
   // stores key of elements in array as "text"
   bucket.layers.unshift(input);
-  bucket.layers[0].name = text + ` - ` + defColor;
+  bucket.layers[0].name = text + ` - ` + input.fill;
   bucket.layers[0].category = "text";
   bucket.layers[0].data = text;
   bucket.ids.unshift(objId); //push id to id list
