@@ -20,6 +20,34 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.io-buttons {
+  text-align: left;
+}
+
+#load-button,
+#export-button {
+  margin-left: 10px;
+  padding: 7px 10px;
+  background-color: rgb(107, 167, 219);
+  color: white;
+  border-radius: 10px;
+  border-style: none;
+  transition: 100ms ease-in-out;
+}
+
+#load-button:hover,
+#export-button:hover {
+  background-color: rgb(131, 179, 220);
+  cursor: pointer;
+}
+
+#main-menu-footer {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  height: 2.5rem; /* Footer height */
+}
+
 .canvas-and-friends-container {
   display: flex;
 }

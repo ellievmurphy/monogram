@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
 import { SketchPicker } from "react-color";
-import { updateBackground } from "./contents/fabric-lib";
+import { canvas, updateBackground } from "./contents/fabric-lib";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
+import { bucket } from "./contents/bucket";
 import "fabric";
 import "./ModuleMenu.css";
 
@@ -60,40 +61,66 @@ export default function ModuleMenu() {
 
   // return statement renders the customization menu and fabricjs canvas on page
   return (
-    <div className="top-menu-container">
-      {/* nav attribute holds the different customization tabs and updates verticalBar on selection
+    <>
+      <div className="top-menu-container">
+        {/* nav attribute holds the different customization tabs and updates verticalBar on selection
             of one of these tabs */}
-      <nav>
-        <ul>
-          <li className="add-text-button-container">
-            <a href="_blank" onClick={handleAddText}>
-              Add Text
-            </a>
-          </li>
-          <li className="add-art-button-container">
-            <a href="_blank" onClick={handleAddArt}>
-              Add Art
-            </a>
-          </li>
-          <li className="upload-button-container">
-            <a href="_blank" onClick={handleUpload}>
-              Upload
-            </a>
-          </li>
-          <li className="change-color-button-container">
-            <a href="_blank" onClick={handleChangeColor}>
-              Product Color
-            </a>
-          </li>
-          <li className="view-layers-button-container">
-            <a href="_blank" onClick={handleViewLayers}>
-              View Layers
-            </a>
-          </li>
-        </ul>
-      </nav>
-      {/* holds the verticalBar state which re-renders every time a new customization tab is selected */}
-      <div className="vertical-toolbar-container flex-item">{verticalBar}</div>
-    </div>
+        <nav>
+          <ul>
+            <li className="add-text-button-container">
+              <a href="_blank" onClick={handleAddText}>
+                Add Text
+              </a>
+            </li>
+            <li className="add-art-button-container">
+              <a href="_blank" onClick={handleAddArt}>
+                Add Art
+              </a>
+            </li>
+            <li className="upload-button-container">
+              <a href="_blank" onClick={handleUpload}>
+                Upload
+              </a>
+            </li>
+            <li className="change-color-button-container">
+              <a href="_blank" onClick={handleChangeColor}>
+                Product Color
+              </a>
+            </li>
+            <li className="view-layers-button-container">
+              <a href="_blank" onClick={handleViewLayers}>
+                View Layers
+              </a>
+            </li>
+          </ul>
+        </nav>
+        {/* holds the verticalBar state which re-renders every time a new customization tab is selected */}
+        <div className="vertical-toolbar-container flex-item">
+          {verticalBar}
+        </div>
+      </div>
+      <footer id="main-menu-footer">
+        <div className="io-buttons">
+          <button
+            id="export-button"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log("save");
+            }}
+          >
+            Export
+          </button>
+          <button
+            id="load-button"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log("load");
+            }}
+          >
+            Load
+          </button>
+        </div>
+      </footer>
+    </>
   );
 }

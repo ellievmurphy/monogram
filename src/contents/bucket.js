@@ -14,9 +14,7 @@ function cloneObj(obj) {
   bucket.layers[0].objId = id;
   bucket.layers[0].id = id;
   bucket.ids.unshift(id);
-  //   }
   console.log(bucket.layers);
-  //   });
 }
 
 function addText(input) {
@@ -74,7 +72,6 @@ function removeObj() {
   });
   canvas.discardActiveObject().renderAll();
   if (num != null && document.getElementById(num) != null) {
-    console.log(num);
     document.getElementById(num).remove();
   } //destroy html
   // TODO: currently deletes properly, but also says "cannot read properties of null"
