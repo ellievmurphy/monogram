@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import AddArtMenu from "./AddArtMenu";
 import AddTextMenu from "./AddTextMenu";
 import { SketchPicker } from "react-color";
-import { canvas, updateBackground } from "./contents/fabric-lib";
+import { updateBackground } from "./contents/fabric-lib";
 import UploadMenu from "./UploadMenu";
 import LayersView from "./LayersView";
 import { bucket } from "./contents/bucket";
+import { canvas } from "./contents/fabric-lib";
 import "fabric";
 import "./ModuleMenu.css";
 
@@ -59,6 +60,7 @@ export default function ModuleMenu() {
     setVerticalBar(<LayersView />);
   }
 
+  let [output, setOutput] = useState("");
   // return statement renders the customization menu and fabricjs canvas on page
   return (
     <>
@@ -105,6 +107,18 @@ export default function ModuleMenu() {
             id="export-button"
             onClick={(event) => {
               event.preventDefault();
+              console.log(bucket.layers);
+              setOutput(
+                JSON.stringify(
+                  canvas.toDatalessJSON([
+                    "objId",
+                    "id",
+                    "selectable",
+                    "name",
+                    "category",
+                  ])
+                )
+              );
               console.log("save");
             }}
           >
@@ -114,6 +128,32 @@ export default function ModuleMenu() {
             id="load-button"
             onClick={(event) => {
               event.preventDefault();
+              if (output) {
+                try {
+                  var obj = JSON.parse(output); // this is how you parse a string into JSON
+                  console.log(obj);
+                  bucket.background = obj.background;
+                } catch (ex) {
+                  console.error(ex);
+                }
+
+                obj = canvas.loadFromJSON(output);
+                bucket.layers = [...obj._objects];
+                bucket.layers.shift(); // remove the product layer from view (i.e. white rectangle)
+                for (let i = 0; i < bucket.layers.length; i++) {
+                  bucket.ids[i] = bucket.layers[i].objId;
+                  //   console.log(
+                  //     i +
+                  //       ": " +
+                  //       bucket.layers[i].objId +
+                  //       ", " +
+                  //       bucket.layers[i].name +
+                  //       ", " +
+                  //       bucket.ids[i] +
+                  //       "\n"
+                  //   );
+                }
+              }
               console.log("load");
             }}
           >

@@ -15,7 +15,7 @@ export default function LayersView() {
     setItemIds(list);
     list.map((id, i) => {
       var found = initList.find((element) => element.id === id);
-      console.log(found + ": " + i);
+      //   console.log(found + ": " + i);
       found.moveTo(list.length - i);
     });
   }
