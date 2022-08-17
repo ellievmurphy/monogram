@@ -119,7 +119,7 @@ export default function ModuleMenu() {
                   ])
                 )
               );
-              console.log("save");
+              //   console.log("save");
             }}
           >
             Export
@@ -131,7 +131,6 @@ export default function ModuleMenu() {
               if (output) {
                 try {
                   var obj = JSON.parse(output); // this is how you parse a string into JSON
-                  console.log(obj);
                   bucket.background = obj.background;
                 } catch (ex) {
                   console.error(ex);
@@ -139,7 +138,7 @@ export default function ModuleMenu() {
 
                 obj = canvas.loadFromJSON(output);
                 bucket.layers = [...obj._objects];
-                bucket.layers.shift(); // remove the product layer from view (i.e. white rectangle)
+                bucket.product = bucket.layers.shift(); // remove the product layer from view (i.e. white rectangle)
                 for (let i = 0; i < bucket.layers.length; i++) {
                   bucket.ids[i] = bucket.layers[i].objId;
                   //   console.log(
@@ -154,7 +153,7 @@ export default function ModuleMenu() {
                   //   );
                 }
               }
-              console.log("load");
+              //   console.log("load");
             }}
           >
             Load

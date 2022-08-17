@@ -3,6 +3,7 @@ import { canvas, createCircle, createText, createRect } from "./fabric-lib";
 const bucket = {
   background: "grey",
   uploads: [],
+  product: [],
   layers: [],
   ids: [],
   currMenu: "default",
