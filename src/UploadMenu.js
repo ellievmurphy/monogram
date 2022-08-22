@@ -1,34 +1,64 @@
 import React, { useState } from "react";
+import { fabric } from "fabric";
+import { canvas } from "./contents/fabric-lib";
 
 export default function UploadMenu() {
   const [selectedImage, setSelectedImage] = useState(null);
+  //   let selectedImage = null;
+  //   const [base64, setBase64] = useState("");
+  let base64 = "";
+
+  function getBase64(cb) {
+    let reader = new FileReader();
+    console.log(selectedImage);
+    reader.readAsDataURL(selectedImage);
+    reader.onload = function () {
+      cb(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
+  }
+  function updateImage(image) {
+    setSelectedImage(image);
+  }
+  function handleChange(event) {
+    //   console.log(event.target.files[0]);
+    updateImage(event.target.files[0]);
+    if (selectedImage) {
+      getBase64((result) => {
+        base64 = result;
+      });
+      console.log("a");
+    } else {
+      console.log("b");
+    }
+    //   console.log(base64);
+    //   canvas.add(fabric.Image.fromURL(base64));
+  }
   return (
     <div>
       <input
         type="file"
         name="myImage"
         onChange={(event) => {
-          console.log(event.target.files[0]);
-          setSelectedImage(event.target.files[0]);
-          //   var imgURL = URL.createObjectURL(selectedImage);
-          //   var imgObj = fabric.Image.fromURL(imgURL);
-          //   console.log(imgURL);
-          //   canvas.add(fabric.Image.fromURL(URL.createObjectURL(selectedImage)));
+          handleChange(event);
         }}
       />
       <br />
 
       <br />
-      {selectedImage && (
+      {selectedImage ? (
         <div>
-          <img
-            alt="not fount"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
-          />
+          {/* {getBase64((result) => {
+            base64 = result;
+          })} */}
+          <img alt="not found" width={"250px"} src={base64} />
           <br />
           <button onClick={() => setSelectedImage(null)}>Remove</button>
         </div>
+      ) : (
+        <div>Nothing uploaded yet</div>
       )}
     </div>
   );

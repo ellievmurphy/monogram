@@ -1,4 +1,5 @@
 import { canvas, createCircle, createText, createRect } from "./fabric-lib";
+import { fabric } from "fabric";
 
 const bucket = {
   background: "grey",
@@ -23,6 +24,13 @@ function addText(input) {
   //   console.log(text);
   canvas.add(text); //add to canvas
   canvas.setActiveObject(text); //set as current active object
+  canvas.renderAll();
+}
+
+function addTextbox() {
+  const box = new fabric.Textbox("New Text");
+  canvas.add(box);
+  canvas.setActiveObject(box);
   canvas.renderAll();
 }
 
@@ -148,6 +156,7 @@ export {
   updateScale,
   createId,
   addText,
+  addTextbox,
   addObj,
   cloneObj,
   removeObj,

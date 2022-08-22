@@ -15,7 +15,11 @@ export default function ModuleMenu() {
   //vertical bar represents the current tab being displayed on the customization menu
   let [verticalBar, setVerticalBar] = useState(
     <div>
-      <h4>Welcome!</h4> Select one of the options above
+      <h4>Welcome!</h4> Select one of the options above or{" "}
+      <em>
+        <u>load</u>
+      </em>{" "}
+      a product below.
     </div>
   );
 
@@ -30,7 +34,7 @@ export default function ModuleMenu() {
   // passes setVerticalBar function via props to be used in child component
   function handleAddArt(event) {
     event.preventDefault();
-    setVerticalBar(<AddArtMenu stateFunction={setVerticalBar} />);
+    setVerticalBar(<AddArtMenu />);
   }
   // handles event when upload tab is selected from customization menu
   // updates vertical bar to UploadMenu React component
@@ -116,10 +120,10 @@ export default function ModuleMenu() {
                     "selectable",
                     "name",
                     "category",
+                    "hoverCursor",
                   ])
                 )
               );
-              //   console.log("save");
             }}
           >
             Export
@@ -141,19 +145,8 @@ export default function ModuleMenu() {
                 bucket.product = bucket.layers.shift(); // remove the product layer from view (i.e. white rectangle)
                 for (let i = 0; i < bucket.layers.length; i++) {
                   bucket.ids[i] = bucket.layers[i].objId;
-                  //   console.log(
-                  //     i +
-                  //       ": " +
-                  //       bucket.layers[i].objId +
-                  //       ", " +
-                  //       bucket.layers[i].name +
-                  //       ", " +
-                  //       bucket.ids[i] +
-                  //       "\n"
-                  //   );
                 }
               }
-              //   console.log("load");
             }}
           >
             Load

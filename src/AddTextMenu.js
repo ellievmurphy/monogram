@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   bucket,
+  addTextbox,
   addText,
   removeObj,
   loadFilteredLayers,
@@ -46,6 +47,7 @@ export default function AddTextMenu(props) {
         }}
       />
       <input type="submit" />
+      <button onClick={addTextbox}>Add Textbox</button>
     </form>
   );
 
