@@ -1,5 +1,10 @@
-import { canvas, createCircle, createText, createRect } from "./fabric-lib";
-import { fabric } from "fabric";
+import {
+  canvas,
+  createCircle,
+  createText,
+  createRect,
+  createTextbox,
+} from "./fabric-lib";
 
 const bucket = {
   background: "grey",
@@ -27,8 +32,11 @@ function addText(input) {
   canvas.renderAll();
 }
 
-function addTextbox() {
-  const box = new fabric.Textbox("New Text");
+function addTextbox(input) {
+  let box;
+  if (bucket.product[0] && bucket.product[0].width)
+    box = createTextbox(input, { outerWidth: bucket.product[0].width });
+  else box = createTextbox(input);
   canvas.add(box);
   canvas.setActiveObject(box);
   canvas.renderAll();

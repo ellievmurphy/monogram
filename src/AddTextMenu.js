@@ -9,6 +9,7 @@ import {
 import { deleteIcon, canvas } from "./contents/fabric-lib";
 import editIcon from "./images/edit-button.svg";
 import EditTextMenu from "./EditTextMenu";
+import { fabric } from "fabric";
 
 // Main React component for AddTextMenu. Has the ability to add / edit / remove text and
 // view different text layers.
@@ -24,31 +25,41 @@ export default function AddTextMenu(props) {
   // function used in conjunction with Array.prototype.filter() function to filter bucket's list of layers
   function checkType(obj) {
     // filters by element's category property in bucket.layers
-    return obj.category === "text";
+    return obj.category === "text" || obj.category === "textbox";
   }
 
   // React component stored in addPage represents the submission form used to add a new text element to the canvas
   const addPage = (
-    <form
-      style={{ marginTop: 15 }}
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (input.length === 0) {
-          input = "New Text";
-        }
-        addText(input);
-      }}
-    >
-      <input
-        type="text"
-        placeholder="Add text..."
-        onChange={(event) => {
-          input = event.target.value;
+    <>
+      <br />
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          addTextbox(input);
         }}
-      />
-      <input type="submit" />
-      <button onClick={addTextbox}>Add Textbox</button>
-    </form>
+      >
+        Add Textbox
+      </button>
+      <form
+        style={{ marginTop: 15 }}
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (input.length === 0) {
+            input = "New Text";
+          }
+          addText(input);
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Add text..."
+          onChange={(event) => {
+            input = event.target.value;
+          }}
+        />
+        <input type="submit" />
+      </form>
+    </>
   );
 
   return (
@@ -74,7 +85,8 @@ export default function AddTextMenu(props) {
 const TextTabs = ({ list, addPage, filterFunction }) => {
   // used as an event listener function to toggle the visibility of the text-editing page
   function handleEdit() {
-    updateMenu(<EditTextMenu />);
+    let isBox = canvas.getActiveObject().category === "textbox";
+    updateMenu(<EditTextMenu isBox={isBox} />);
   }
   // function used to refresh / load the filtered version of bucket.layers with only text elements
   function loadLayers() {

@@ -174,6 +174,35 @@ const createText = (text) => {
   createEditIcon();
   return input;
 };
+
+// create a text object and return the input from the user
+const createTextbox = (input, properties) => {
+  const objId = createId(); //create unique id for object
+  if (input === "") {
+    input = "New text";
+  }
+  let width = 20;
+  if (properties && properties.width) width = properties.width;
+
+  const box = new fabric.Textbox(input, {
+    left: 150,
+    top: 150,
+    width: width,
+    height: 10,
+  });
+
+  // stores key of elements in array as "text"
+  bucket.layers.unshift(box);
+  bucket.layers[0].name = input + ` - Textbox`;
+  bucket.layers[0].category = "textbox";
+  bucket.layers[0].data = input;
+  bucket.ids.unshift(objId); //push id to id list
+  //   bucket.ids.push(objId);
+  createDeleteIcon();
+  createCloneIcon();
+  createEditIcon();
+  return box;
+};
 // update background color
 function updateBackground(color) {
   canvas.setActiveObject(bucket.product);
@@ -183,6 +212,7 @@ function updateBackground(color) {
 
 export {
   canvas,
+  createTextbox,
   deleteIcon,
   createCircle,
   createRect,
