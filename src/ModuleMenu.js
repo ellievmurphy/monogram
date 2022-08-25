@@ -111,7 +111,7 @@ export default function ModuleMenu() {
             id="export-button"
             onClick={(event) => {
               event.preventDefault();
-              console.log(bucket.layers);
+              //   console.log(bucket.layers);
               setOutput(
                 JSON.stringify(
                   canvas.toDatalessJSON([

@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { SketchPicker } from "react-color";
-import { changeFont, changeObjColor, updateScale } from "./contents/bucket";
+import {
+  bucket,
+  changeFont,
+  changeObjColor,
+  updateScale,
+} from "./contents/bucket";
 import { canvas } from "./contents/fabric-lib";
 import "./EditTextMenu.css";
 
 export default function EditTextMenu(props) {
   let isBox = props.isBox;
-  let [showMenu, setShowMenu] = useState(false);
-  let [fontSize, setFontSize] = useState(100);
-  let [boxSize, setBoxSize] = useState({
-    height: canvas.getActiveObject().get("height").toFixed(),
-    width: canvas.getActiveObject().get("width").toFixed(),
+  const [showMenu, setShowMenu] = useState(false);
+  const [fontSize, setFontSize] = useState(100);
+  const [frozen, setFrozen] = useState(false);
+  const [boxSize, setBoxSize] = useState({
+    height: canvas.getActiveObject().get("height"),
+    width: canvas.getActiveObject().get("width"),
   });
   //   var fonts = ["mono_display"];
   function handleFontDrop(event) {
@@ -23,16 +29,24 @@ export default function EditTextMenu(props) {
     }
   }
 
-  function changeHeight(height) {
-    setBoxSize({ ...boxSize, height: height });
-    canvas.getActiveObject().set("height", height);
-    canvas.renderAll();
+  function changeHeight(newHeight) {
+    if (newHeight <= bucket.product.height && newHeight >= 0) {
+      setBoxSize({ ...boxSize, height: newHeight });
+      canvas.getActiveObject().set("height", newHeight);
+      canvas.renderAll();
+    }
   }
 
-  function changeWidth(width) {
-    setBoxSize({ ...boxSize, width: width });
-    canvas.getActiveObject().set("width", width);
-    canvas.renderAll();
+  function changeWidth(newWidth) {
+    if (newWidth <= bucket.product.width && newWidth >= 0) {
+      setBoxSize({ ...boxSize, width: newWidth });
+      canvas.getActiveObject().set("width", newWidth);
+      canvas.renderAll();
+    }
+  }
+
+  function updateFrozen() {
+    setFrozen(!frozen);
   }
 
   if (isBox) {
@@ -82,6 +96,8 @@ export default function EditTextMenu(props) {
                 type="checkbox"
                 id="freeze-box-size"
                 name="freeze-box-size"
+                value="isFrozen"
+                onChange={updateFrozen}
               />
               <br />
               <section name="box-size-input" id="box-size-input">
@@ -93,6 +109,7 @@ export default function EditTextMenu(props) {
                   step="1"
                   style={{ width: 50 }}
                   defaultValue={boxSize.height}
+                  disabled={frozen}
                   onChange={(event) => {
                     //update height value of boxSize state variable
                     changeHeight(event.target.value);
@@ -109,6 +126,7 @@ export default function EditTextMenu(props) {
                   style={{ width: 50 }}
                   step="2"
                   defaultValue={boxSize.width}
+                  disabled={frozen}
                   onChange={(event) => {
                     //update width value of boxSize state variable
                     changeWidth(event.target.value);

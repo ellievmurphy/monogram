@@ -38,11 +38,17 @@ export default function LayersView() {
 }
 
 const Item = ({ value, list }) => {
+  function findLayer(lookID) {
+    const found = list.find((element) => element.id === lookID);
+    if (found) {
+      return found.name;
+    } else {
+      return "error";
+    }
+  }
   return (
     <Reorder.Item drag="y" value={value}>
-      <h1 className="layer-item-button-wrapper">
-        {list.find((element) => element.id === value).name}
-      </h1>
+      <h1 className="layer-item-button-wrapper">{findLayer(value)}</h1>
     </Reorder.Item>
   );
 };

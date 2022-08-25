@@ -9,7 +9,7 @@ import {
 const bucket = {
   background: "grey",
   uploads: [],
-  product: [],
+  product: null,
   layers: [],
   ids: [],
   currMenu: "default",
@@ -34,8 +34,9 @@ function addText(input) {
 
 function addTextbox(input) {
   let box;
-  if (bucket.product[0] && bucket.product[0].width)
-    box = createTextbox(input, { outerWidth: bucket.product[0].width });
+  //   console.log(bucket.product);
+  if (bucket.product && bucket.product.width)
+    box = createTextbox(input, { width: bucket.product.width });
   else box = createTextbox(input);
   canvas.add(box);
   canvas.setActiveObject(box);
